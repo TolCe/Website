@@ -1,15 +1,20 @@
-<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 250" width="500" height="250">
-	<title>New Project</title>
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 240" width="1000" height="240">
+	<title>logo</title>
 	<defs>
-		<image  width="500" height="250" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAD6AQMAAABtZScNAAAAAXNSR0IB2cksfwAAAANQTFRFAAAAp3o92gAAAAF0Uk5TAEDm2GYAAAAkSURBVHic7cEBAQAAAICQ/q/uCAoAAAAAAAAAAAAAAAAAAABqPoAAAfo5gqoAAAAASUVORK5CYII="/>
+		<image  width="1000" height="240" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAADwAQMAAACpANzMAAAAAXNSR0IB2cksfwAAAANQTFRFAAAAp3o92gAAAAF0Uk5TAEDm2GYAAAA0SURBVHic7cExAQAAAMKg9U9tB2+gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4DHYgAAFH/HK+AAAAAElFTkSuQmCC"/>
 	</defs>
 	<style>
 		tspan { white-space:pre } 
-		.t0 { font-size: 90px;fill: #000000;font-weight: 400;font-family: "VujahdayScript-Regular", "Vujahday Script" } 
+		.t0 { font-size: 200px;fill: #545355;font-weight: 700;font-family: "SegoeUI-Bold", "Segoe UI" } 
+		.t1 { font-size: 60px;fill: #717073;font-weight: 700;font-family: "SegoeUI-Bold", "Segoe UI" } 
 	</style>
 	<use id="Background" href="#img1" x="0" y="0"/>
-	<text id="REVOLAVE" style="transform: matrix(1,0,0,1,239,149)" >
-		<tspan x="-230.1" y="0" class="t0">R</tspan><tspan  y="0" class="t0">E</tspan><tspan  y="0" class="t0">V</tspan><tspan  y="0" class="t0">O</tspan><tspan  y="0" class="t0">L</tspan><tspan  y="0" class="t0">A</tspan><tspan  y="0" class="t0">V</tspan><tspan  y="0" class="t0">E
+	<text id="REVOLAVE" style="transform: matrix(1,0,0,1,494.5,151.5)" >
+		<tspan x="-499.4" y="0" class="t0">R</tspan><tspan  y="0" class="t0">E</tspan><tspan  y="0" class="t0">V</tspan><tspan  y="0" class="t0">O</tspan><tspan  y="0" class="t0">L</tspan><tspan  y="0" class="t0">A</tspan><tspan  y="0" class="t0">V</tspan><tspan  y="0" class="t0">E
+</tspan>
+	</text>
+	<text id="experience the world of dreams" style="transform: matrix(1,0,0,1,500,215)" >
+		<tspan x="-446.3" y="0" class="t1">e</tspan><tspan  y="0" class="t1">x</tspan><tspan  y="0" class="t1">p</tspan><tspan  y="0" class="t1">e</tspan><tspan  y="0" class="t1">r</tspan><tspan  y="0" class="t1">i</tspan><tspan  y="0" class="t1">e</tspan><tspan  y="0" class="t1">n</tspan><tspan  y="0" class="t1">c</tspan><tspan  y="0" class="t1">e</tspan><tspan  y="0" class="t1"> </tspan><tspan  y="0" class="t1">t</tspan><tspan  y="0" class="t1">h</tspan><tspan  y="0" class="t1">e</tspan><tspan  y="0" class="t1"> </tspan><tspan  y="0" class="t1">w</tspan><tspan  y="0" class="t1">o</tspan><tspan  y="0" class="t1">r</tspan><tspan  y="0" class="t1">l</tspan><tspan  y="0" class="t1">d</tspan><tspan  y="0" class="t1"> </tspan><tspan  y="0" class="t1">o</tspan><tspan  y="0" class="t1">f</tspan><tspan  y="0" class="t1"> </tspan><tspan  y="0" class="t1">d</tspan><tspan  y="0" class="t1">r</tspan><tspan  y="0" class="t1">e</tspan><tspan  y="0" class="t1">a</tspan><tspan  y="0" class="t1">m</tspan><tspan  y="0" class="t1">s</tspan><tspan  y="0" class="t1">
 </tspan>
 	</text>
 </svg>
