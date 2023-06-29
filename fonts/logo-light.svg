@@ -1,0 +1,20 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 240" width="1000" height="240">
+	<title>logo-dark-svg</title>
+	<defs>
+		<image width="1000" height="240" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAADwAQMAAACpANzMAAAAAXNSR0IB2cksfwAAAANQTFRFAAAAp3o92gAAAAF0Uk5TAEDm2GYAAAA0SURBVHic7cExAQAAAMKg9U9tB2+gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4DHYgAAFH/HK+AAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre } 
+		.t0 { font-size: 160px;fill: #f3f0f1;font-weight: bold;font-family: "Segoe UI" } 
+		.t1 { font-size: 48px;fill: #b9b9b9;font-weight: bold;font-family: "Segoe UI" } 
+	</style>
+	<use id="img1" href="#img1" transform="matrix(1,0,0,1,0,0)"/>
+	<text id="REVOLAVE" style="transform: matrix(1,0,0,1,30,146.75)" >
+		<tspan x="0" y="0" class="t0">REVOLAVE</tspan><tspan  y="0" class="t0">
+</tspan>
+	</text>
+	<text id="experience the world of dreams" style="transform: matrix(1,0,0,1,69,209)" >
+		<tspan x="0" y="0" class="t1">e</tspan><tspan  y="0" class="t1">x</tspan><tspan  y="0" class="t1">p</tspan><tspan  y="0" class="t1">e</tspan><tspan  y="0" class="t1">r</tspan><tspan  y="0" class="t1">i</tspan><tspan  y="0" class="t1">e</tspan><tspan  y="0" class="t1">n</tspan><tspan  y="0" class="t1">c</tspan><tspan  y="0" class="t1">e</tspan><tspan  y="0" class="t1"> </tspan><tspan  y="0" class="t1">t</tspan><tspan  y="0" class="t1">h</tspan><tspan  y="0" class="t1">e</tspan><tspan  y="0" class="t1"> </tspan><tspan  y="0" class="t1">w</tspan><tspan  y="0" class="t1">o</tspan><tspan  y="0" class="t1">r</tspan><tspan  y="0" class="t1">l</tspan><tspan  y="0" class="t1">d</tspan><tspan  y="0" class="t1"> </tspan><tspan  y="0" class="t1">o</tspan><tspan  y="0" class="t1">f</tspan><tspan  y="0" class="t1"> </tspan><tspan  y="0" class="t1">d</tspan><tspan  y="0" class="t1">r</tspan><tspan  y="0" class="t1">e</tspan><tspan  y="0" class="t1">a</tspan><tspan  y="0" class="t1">m</tspan><tspan  y="0" class="t1">s</tspan><tspan  y="0" class="t1">
+</tspan>
+	</text>
+</svg>
