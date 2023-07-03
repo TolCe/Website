@@ -3211,10 +3211,6 @@ only screen and (min-device-pixel-ratio: 1.5) {
   animation: slide-icons 10s infinite linear;
 }
 
-.icon-button.paused {
-  animation-play-state: paused;
-}
-
 @keyframes slide-icons {
   0% {
     opacity: 0;
