@@ -1013,6 +1013,19 @@ section.home {
   min-height: 100vh;
 }
 
+section.contact {
+  padding-top: 80px;
+  background: #FFF;
+  height: 60vh;
+  min-height: 60vh;
+}
+
+section.privacy {
+  padding-top: 100px;
+  background: #FFF;
+  padding-bottom: 20vh;
+}
+
 section.home .intro {
   margin: auto;
   max-width: 540px;
