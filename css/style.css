@@ -1014,16 +1014,15 @@ section.home {
 }
 
 section.contact {
-  padding-top: 80px;
+  padding-top: 5vh;
   background: #FFF;
-  height: 60vh;
-  min-height: 60vh;
+  height: 55vh;
+  min-height: 55vh;
 }
 
 section.privacy {
-  padding-top: 100px;
   background: #FFF;
-  padding-bottom: 20vh;
+  padding-bottom: 10vh;
 }
 
 section.home .intro {
@@ -2059,8 +2058,10 @@ select.portfolio-filter-mobile {
 
 footer.footer {
   background: #353353;
-  padding: 40px 0;
   text-align: center;
+  align-content: center;
+  height: 5vh;
+  min-height: 5vh;
 }
 
 footer.footer .copyright {
