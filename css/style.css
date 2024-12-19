@@ -1281,7 +1281,7 @@ footer.footer {
 
 footer.footer .copyright {
   color: #9C9AB3;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 footer.footer.light {
@@ -2427,13 +2427,13 @@ only screen and (min-device-pixel-ratio: 1.5) {
 }
 
 .icon-button img {
-  width: 200px;
-  height: 200px;
-  margin-right: 33vh;
-  border-radius: 30px;
+  border-radius: 20px;
 }
 
 .icon-button {
+  width: 270px;
+  height: 480px;
+  margin-right: 10vh;
   display: inline-block;
   animation: slide-icons 15s infinite linear;
 }
@@ -2446,12 +2446,12 @@ only screen and (min-device-pixel-ratio: 1.5) {
   }
 
   25% {
-    opacity: 1;
+    opacity: 0.8;
     /* Gradually increase opacity */
   }
 
   75% {
-    opacity: 1;
+    opacity: 0.8;
     /* Maintain full opacity */
   }
 
