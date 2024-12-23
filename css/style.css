@@ -119,7 +119,7 @@ a {
 }
 
 a:hover {
-  color: #353353;
+  color: #8f565d;
   text-decoration: none;
 }
 
@@ -1004,6 +1004,23 @@ section.home {
   height: 100vh;
 }
 
+section.home .intro {
+  text-align: center;
+  align-content: top;
+  padding-top: 10%;
+  width: 100%;
+  height: 100vh;
+}
+
+.section-resume-text {
+  font-size: 28px;
+  color: white;
+}
+
+.section-resume-text:hover {
+  color: gray;
+}
+
 section.contact {
   text-align: center;
   align-content: center;
@@ -1012,23 +1029,16 @@ section.contact {
   height: 100vh;
 }
 
-section.privacy {
-  background: #494673;
-  padding-top: 10vh;
-  padding-bottom: 10vh;
-}
-
-section.home .intro {
-  text-align: center;
-  align-content: center;
-  width: 100%;
-  height: 100vh;
-}
-
 .section-contact-title {
   font-size: 32px;
   text-align: left;
   color: white;
+}
+
+section.privacy {
+  background: #494673;
+  padding-top: 10vh;
+  padding-bottom: 10vh;
 }
 
 .section-privacy-title {
