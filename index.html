@@ -83,44 +83,40 @@
 
 	<main class="content">
 
-		<!-- section home -->
 		<section id="home" class="home dark d-flex align-items-center">
-			<!-- intro -->
+
 			<div class="intro">
-				<!-- info -->
+				
+				<div class="carousel">					
+					<div class="carousel-track">
 
-				<div class="icon-container">
-					<ul class="icon-slider">
-
-						<a href="https://play.google.com/store/apps/details?id=com.revolave.rainonem"
-							class="icon-button" target="_blank">
+						<a href="https://play.google.com/store/apps/details?id=com.revolave.rainonem" target="_blank">
 							<img src="images/rot.jpg" alt="Icon_1"></a>
 
 						<a href="https://play.google.com/store/apps/details?id=com.revolave.medievalhero"
-							class="icon-button" target="_blank">
+							target="_blank">
 							<img src="images/mh.jpg" alt="Icon_2"></a>
 
 						<a href="https://play.google.com/store/apps/details?id=com.revolave.wegotnobrakes"
-							class="icon-button" target="_blank">
+							target="_blank">
 							<img src="images/wgnb.png" alt="Icon_3"></a>
 
 						<a href="https://play.google.com/store/apps/details?id=com.revolave.rotator2048"
-							class="icon-button" target="_blank">
+							target="_blank">
 							<img src="images/r2048.png" alt="Icon_4"></a>
 
 						<a href="https://play.google.com/store/apps/details?id=com.ticstudio.gaplessthrow"
-							class="icon-button" target="_blank">
+							target="_blank">
 							<img src="images/gt.jpg" alt="Icon_5"></a>
 
-						<a href="https://play.google.com/store/apps/details?id=com.revolave.tap2048" class="icon-button"
-							target="_blank">
+						<a href="https://play.google.com/store/apps/details?id=com.revolave.tap2048" target="_blank">
 							<img src="images/t2048.png" alt="Icon_6"></a>
 
 						<a href="https://play.google.com/store/apps/details?id=com.revolave.blockescape"
-							class="icon-button" target="_blank">
+							target="_blank">
 							<img src="images/be2048.png" alt="Icon_7"></a>
 
-					</ul>
+					</div>
 				</div>
 
 				<!-- social icons -->
@@ -138,7 +134,6 @@
 				</ul>
 
 				<div class="container mt-5">
-
 					<div class="col-md-12 wow fadeInUp">
 
 						<a class="section-resume-text"
@@ -223,6 +218,50 @@
 			<span class="copyright">Tolga Cebeci</span>
 
 		</footer>
+
+		<script>
+			const carouselTrack = document.querySelector('.carousel-track');
+			const duration = 10000; // Total animation duration in milliseconds
+			let startTime, animationFrameId;
+			let isPaused = false;
+			let elapsed = 0; // Track the elapsed time of the animation
+
+			const animate = (timestamp) => {
+				if (!startTime) startTime = timestamp;
+
+				// Calculate the elapsed time
+				const currentElapsed = timestamp - startTime + elapsed;
+
+				// Calculate the percentage of animation completed
+				const percentage = (currentElapsed % duration) / duration;
+
+				// Move the carousel
+				const transformValue = -percentage * 100; // Transform in percentage
+				carouselTrack.style.transform = `translateX(${transformValue}%)`;
+
+				// Continue the animation
+				if (!isPaused) {
+					animationFrameId = requestAnimationFrame(animate);
+				}
+			};
+
+			// Start the animation
+			animationFrameId = requestAnimationFrame(animate);
+
+			// Pause the animation on hover
+			carouselTrack.addEventListener('mouseenter', () => {
+				isPaused = true;
+				cancelAnimationFrame(animationFrameId);
+				elapsed += performance.now() - startTime; // Save the elapsed time
+			});
+
+			// Resume the animation on mouse leave
+			carouselTrack.addEventListener('mouseleave', () => {
+				isPaused = false;
+				startTime = null; // Reset start time
+				animationFrameId = requestAnimationFrame(animate);
+			});
+		</script>
 
 	</main>
 
