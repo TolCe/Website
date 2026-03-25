@@ -9,15 +9,11 @@
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
 
 	<meta name="facebook-domain-verification" content="js1cnerb4lcqy3l5tyos16der3ur03" />
-	<!--<meta name="facebook-domain-verification" content="ln512or32u6ewuwc7sz9h41lt9xs7q" />-->
 
 	<!-- STYLESHEETS -->
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all">
 	<link rel="stylesheet" href="css/all.min.css" type="text/css" media="all">
-	<link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" media="all">
-	<link rel="stylesheet" href="css/slick.css" type="text/css" media="all">
 	<link rel="stylesheet" href="css/animate.css" type="text/css" media="all">
-	<link rel="stylesheet" href="css/magnific-popup.css" type="text/css" media="all">
 	<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
 
 </head>
@@ -191,67 +187,14 @@
 
 		</footer>
 
-		<script>
-			const carouselTrack = document.querySelector('.carousel-track');
-			const duration = 10000; // Total animation duration in milliseconds
-			let startTime, animationFrameId;
-			let isPaused = false;
-			let elapsed = 0; // Track the elapsed time of the animation
-
-			const animate = (timestamp) => {
-				if (!startTime) startTime = timestamp;
-
-				// Calculate the elapsed time
-				const currentElapsed = timestamp - startTime + elapsed;
-
-				// Calculate the percentage of animation completed
-				const percentage = (currentElapsed % duration) / duration;
-
-				// Move the carousel
-				const transformValue = -percentage * 100; // Transform in percentage
-				carouselTrack.style.transform = `translateX(${transformValue}%)`;
-
-				// Continue the animation
-				if (!isPaused) {
-					animationFrameId = requestAnimationFrame(animate);
-				}
-			};
-
-			// Start the animation
-			animationFrameId = requestAnimationFrame(animate);
-
-			// Pause the animation on hover
-			carouselTrack.addEventListener('mouseenter', () => {
-				isPaused = true;
-				cancelAnimationFrame(animationFrameId);
-				elapsed += performance.now() - startTime; // Save the elapsed time
-			});
-
-			// Resume the animation on mouse leave
-			carouselTrack.addEventListener('mouseleave', () => {
-				isPaused = false;
-				startTime = null; // Reset start time
-				animationFrameId = requestAnimationFrame(animate);
-			});
-		</script>
-
 	</main>
 
 	<script src="js/jquery-1.12.3.min.js"></script>
 	<script src="js/jquery.easing.min.js"></script>
-	<script src="js/jquery.waypoints.min.js"></script>
-	<script src="js/jquery.counterup.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script src="js/isotope.pkgd.min.js"></script>
-	<script src="js/infinite-scroll.min.js"></script>
-	<script src="js/imagesloaded.pkgd.min.js"></script>
-	<script src="js/slick.min.js"></script>
 	<script src="js/validator.js"></script>
 	<script src="js/wow.min.js"></script>
-	<script src="js/morphext.min.js"></script>
-	<script src="js/parallax.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="games.js"></script>
 	<script src="js/scripts.js"></script>
