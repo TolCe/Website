@@ -2430,37 +2430,29 @@ only screen and (min-device-pixel-ratio: 1.5) {
 
 .carousel-track {
   display: flex;
-  animation: slide 20s linear infinite;
+  align-items: center;
+  animation: marquee 21s linear infinite;
+  will-change: transform;
 }
 
 .carousel:hover .carousel-track {
   animation-play-state: paused;
 }
 
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.carousel-track a {
+  flex-shrink: 0;
+  margin-right: 2vw;
+}
+
 .carousel img {
   width: 10vw;
-  margin-right: 10vw;  
+  height: auto;
   border-radius: 20px;
-  flex-shrink: 0;
+  display: block;
 }
 
-/* Animation keyframes */
-@keyframes slide {
-  0% {
-    opacity: 0;
-    transform: translateX(80%);
-  }
-
-  15% {
-    opacity: 0.9;
-  }
-
-  85% {
-    opacity: 0.9;
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateX(-80%);
-  }
-}
