@@ -1,0 +1,1262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Android Icon Forge for Unity | Tolga Cebeci</title>
+<meta name="description" content="Generate every Android icon texture Unity 6 needs from one master image, plus an Editor script that assigns them.">
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+<style>
+:root{
+  --bg:#f3f5f4; --panel:#ffffff; --panel-2:#eceff0; --line:#d8dedc; --line-2:#c3cbc8;
+  --ink:#10161a; --ink-2:#4a5654; --ink-3:#77837f;
+  --accent:#0f8f57; --accent-solid:#3ddc84; --accent-soft:#e2f7ec;
+  --warn:#b4530a; --danger:#b3261e;
+  --radius:10px; --radius-sm:6px;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --checker:#dfe4e2;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1311; --panel:#151c19; --panel-2:#1c2522; --line:#28332f; --line-2:#36443f;
+    --ink:#e8efec; --ink-2:#9fb0aa; --ink-3:#70817c;
+    --accent:#3ddc84; --accent-solid:#3ddc84; --accent-soft:#16301f;
+    --warn:#e79b4a; --danger:#f2836f;
+    --checker:#232c29;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1311; --panel:#151c19; --panel-2:#1c2522; --line:#28332f; --line-2:#36443f;
+  --ink:#e8efec; --ink-2:#9fb0aa; --ink-3:#70817c;
+  --accent:#3ddc84; --accent-solid:#3ddc84; --accent-soft:#16301f;
+  --warn:#e79b4a; --danger:#f2836f;
+  --checker:#232c29;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:14px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px;padding-block:28px 64px}
+header.top{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
+.backlink{display:inline-block;font-size:12px;color:var(--ink-2);text-decoration:none;margin-bottom:8px}
+.backlink:hover{color:var(--accent)}
+h1{font-size:22px;letter-spacing:-.01em;margin:0;font-weight:650;text-wrap:balance}
+h1 .mark{color:var(--accent)}
+.sub{color:var(--ink-2);margin:4px 0 0;max-width:62ch}
+.themebtn{font:inherit;font-size:12px;color:var(--ink-2);background:var(--panel);border:1px solid var(--line);
+  border-radius:99px;padding:6px 12px;cursor:pointer}
+.themebtn:hover{border-color:var(--line-2);color:var(--ink)}
+
+.grid{display:grid;grid-template-columns:minmax(320px,400px) 1fr;gap:18px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.panel + .panel{margin-top:14px}
+.phead{display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:11px 14px;border-bottom:1px solid var(--line)}
+.phead h2{margin:0;font-size:11px;font-family:var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.pbody{padding:14px;display:flex;flex-direction:column;gap:13px}
+
+/* drop zone */
+#drop{
+  border:1.5px dashed var(--line-2);border-radius:var(--radius);background:var(--panel-2);
+  padding:22px 16px;text-align:center;cursor:pointer;transition:border-color .12s,background .12s;
+}
+#drop:hover,#drop.hot{border-color:var(--accent);background:var(--accent-soft)}
+#drop strong{display:block;font-size:14px}
+#drop span{color:var(--ink-3);font-size:12px}
+#drop.loaded{padding:12px;display:flex;gap:12px;align-items:center;text-align:left}
+#drop.loaded .thumb{width:46px;height:46px;border-radius:var(--radius-sm);flex:0 0 auto;
+  background-image:conic-gradient(var(--checker) 25%,transparent 0 50%,var(--checker) 0 75%,transparent 0);
+  background-size:12px 12px;border:1px solid var(--line)}
+#drop.loaded .thumb img{width:100%;height:100%;object-fit:contain;display:block}
+
+label.field{display:flex;flex-direction:column;gap:5px}
+.lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2)}
+.row{display:flex;gap:9px;align-items:center}
+.row.wrapy{flex-wrap:wrap}
+.grow{flex:1 1 auto;min-width:0}
+
+select,input[type=text],input[type=number]{
+  font:inherit;font-size:13px;color:var(--ink);background:var(--panel-2);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:7px 9px;width:100%
+}
+select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+input[type=color]{width:38px;height:32px;padding:2px;border:1px solid var(--line);border-radius:var(--radius-sm);
+  background:var(--panel-2);cursor:pointer;flex:0 0 auto}
+input[type=range]{width:100%;accent-color:var(--accent-solid);margin:0}
+.sliderrow{display:grid;grid-template-columns:1fr 58px;gap:9px;align-items:center}
+.val{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;font-variant-numeric:tabular-nums}
+
+.check{display:flex;gap:8px;align-items:flex-start;cursor:pointer;font-size:13px}
+.check input{margin:3px 0 0;accent-color:var(--accent-solid);flex:0 0 auto}
+.check .hint{display:block;color:var(--ink-3);font-size:11.5px}
+
+button.btn{
+  font:inherit;font-size:13px;font-weight:550;border-radius:var(--radius-sm);cursor:pointer;
+  padding:8px 13px;border:1px solid var(--line-2);background:var(--panel-2);color:var(--ink);
+  white-space:nowrap
+}
+button.btn:hover{border-color:var(--ink-3)}
+button.btn.primary{background:var(--accent-solid);border-color:var(--accent-solid);color:#05231a;font-weight:650}
+button.btn.primary:hover{filter:brightness(1.06)}
+button.btn:disabled{opacity:.45;cursor:not-allowed}
+button.btn.tiny{padding:5px 9px;font-size:11.5px}
+
+/* previews */
+.masks{display:flex;flex-wrap:wrap;gap:16px}
+.mask{display:flex;flex-direction:column;align-items:center;gap:7px;width:108px}
+.mask .cap{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.mask .stage{width:104px;height:104px;position:relative}
+.mask canvas{width:104px;height:104px;display:block;border-radius:2px}
+.m-circle canvas{clip-path:circle(50% at 50% 50%)}
+.m-squircle canvas{clip-path:path("M52,0 C10.4,0 0,10.4 0,52 C0,93.6 10.4,104 52,104 C93.6,104 104,93.6 104,52 C104,10.4 93.6,0 52,0 Z")}
+.m-rounded canvas{border-radius:23px}
+.m-square canvas{border-radius:4px}
+.mask .stage::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none}
+
+.bigstage{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start}
+.layerbox{display:flex;flex-direction:column;gap:7px}
+.layerbox .cap{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.cv{background-image:conic-gradient(var(--checker) 25%,transparent 0 50%,var(--checker) 0 75%,transparent 0);
+  background-size:14px 14px;border:1px solid var(--line);border-radius:var(--radius-sm)}
+canvas.guide-host{display:block}
+.themedemo{display:flex;gap:10px;align-items:center}
+.themedemo .swatchchip{width:22px;height:22px;border-radius:5px;border:1px solid var(--line);cursor:pointer}
+.themedemo .swatchchip[aria-pressed="true"]{outline:2px solid var(--accent);outline-offset:1px}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.chip{width:26px;height:26px;border-radius:6px;border:1px solid var(--line-2);cursor:pointer;padding:0;
+  position:relative;transition:transform .1s}
+.chip:hover{transform:translateY(-1px)}
+.chip[aria-pressed="true"]{box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--accent)}
+.chip.wide{width:38px}
+#eyeStage{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+#eyeCanvas{width:168px;height:168px;max-width:100%;cursor:crosshair;border:1px solid var(--line);
+  border-radius:var(--radius-sm);display:block;
+  background-image:conic-gradient(var(--checker) 25%,transparent 0 50%,var(--checker) 0 75%,transparent 0);
+  background-size:14px 14px}
+.eyeread{display:flex;flex-direction:column;gap:6px;font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+.eyesw{width:40px;height:40px;border-radius:6px;border:1px solid var(--line-2);background:var(--panel-2)}
+table.sizes{width:100%;border-collapse:collapse;font-size:12.5px}
+table.sizes th,table.sizes td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--line)}
+table.sizes th{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+table.sizes td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink-2)}
+table.sizes tr:last-child td{border-bottom:0}
+.tablewrap{overflow-x:auto}
+
+.note{font-size:12px;color:var(--ink-2);background:var(--panel-2);border:1px solid var(--line);
+  border-left:3px solid var(--accent);border-radius:var(--radius-sm);padding:9px 11px}
+.note code{font-family:var(--mono);font-size:11.5px}
+.status{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);min-height:17px}
+.status.err{color:var(--danger)}
+.empty{color:var(--ink-3);font-size:13px;padding:26px 6px;text-align:center}
+hr.sep{border:0;border-top:1px solid var(--line);margin:2px 0}
+.stack{display:flex;flex-direction:column;gap:11px}
+.foot{margin-top:26px;color:var(--ink-3);font-size:12px;text-align:center}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div>
+    <a class="backlink" href="index.html">&larr; Back to tolgacebeci.com</a>
+    <h1>Android Icon Forge <span class="mark">for Unity</span></h1>
+    <p class="sub">Drop in one master icon. Get every Android icon texture Unity 6 asks for in Player Settings, plus an Editor script that assigns them for you.</p>
+  </div>
+  <button class="themebtn" id="themeBtn" type="button">Theme: system</button>
+</header>
+
+<div class="grid">
+
+  <!-- ============ LEFT: CONTROLS ============ -->
+  <div>
+    <section class="panel">
+      <div class="phead"><h2>Source icon</h2><button class="btn tiny" id="clearBtn" type="button" hidden>Remove</button></div>
+      <div class="pbody">
+        <div id="drop" tabindex="0" role="button" aria-label="Choose or drop an icon image">
+          <strong>Drop your icon here</strong>
+          <span>PNG, SVG, JPG or WebP &middot; square, 1024&times;1024 or larger is ideal</span>
+        </div>
+        <input type="file" id="file" accept="image/*" hidden>
+        <label class="check">
+          <input type="checkbox" id="trim" checked>
+          <span>Trim transparent padding
+            <span class="hint">Measures the artwork's real bounds so scaling is predictable.</span></span>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="phead"><h2>Foreground layer</h2></div>
+      <div class="pbody">
+        <label class="field">
+          <span class="lbl">Artwork size <span id="safeWarn" style="color:var(--warn)" hidden>&middot; outside safe zone</span></span>
+          <div class="sliderrow">
+            <input type="range" id="fgScale" min="30" max="100" step="1" value="61">
+            <span class="val" id="fgScaleV">61%</span>
+          </div>
+        </label>
+        <div class="row">
+          <label class="field grow"><span class="lbl">Offset X</span>
+            <div class="sliderrow"><input type="range" id="fgX" min="-20" max="20" step="1" value="0"><span class="val" id="fgXV">0</span></div>
+          </label>
+          <label class="field grow"><span class="lbl">Offset Y</span>
+            <div class="sliderrow"><input type="range" id="fgY" min="-20" max="20" step="1" value="0"><span class="val" id="fgYV">0</span></div>
+          </label>
+        </div>
+        <div class="note">Android crops the outer ring of the 108&nbsp;dp layer. Keep artwork at or under <strong>61%</strong> and nothing can be clipped by any launcher mask.</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="phead"><h2>Background layer</h2></div>
+      <div class="pbody">
+        <label class="field"><span class="lbl">Fill</span>
+          <select id="bgMode">
+            <option value="solid" selected>Solid colour</option>
+            <option value="gradient">Linear gradient</option>
+            <option value="image">Separate image</option>
+          </select>
+        </label>
+        <div class="row" id="bgSolidRow">
+          <input type="color" id="bgC1" value="#1b2430">
+          <input type="text" id="bgC1Hex" value="#1b2430" spellcheck="false" aria-label="Background colour hex">
+          <button class="btn tiny" id="eyeBtn" type="button">Eyedropper</button>
+        </div>
+        <div id="pickerBox" class="stack" hidden>
+          <div class="row wrapy" id="pickTargetRow" hidden>
+            <span class="lbl">Applies to</span>
+            <button class="btn tiny" type="button" data-target="c1" aria-pressed="true">Gradient start</button>
+            <button class="btn tiny" type="button" data-target="c2" aria-pressed="false">Gradient end</button>
+          </div>
+          <div>
+            <span class="lbl">Colours in your icon</span>
+            <div class="chips" id="paletteChips"></div>
+          </div>
+          <div id="eyeStage" hidden>
+            <canvas id="eyeCanvas" width="336" height="336" aria-label="Click your artwork to sample a colour"></canvas>
+            <div class="eyeread">
+              <span class="eyesw" id="eyeSw"></span>
+              <span id="eyeHex">move over the art</span>
+              <button class="btn tiny" id="screenEyeBtn" type="button" hidden>Pick from screen</button>
+              <button class="btn tiny" id="eyeDone" type="button">Done</button>
+            </div>
+          </div>
+        </div>
+        <div id="bgGradRows" hidden class="stack">
+          <div class="row">
+            <input type="color" id="bgC2" value="#3ddc84">
+            <input type="text" id="bgC2Hex" value="#3ddc84" spellcheck="false" aria-label="Second gradient colour hex">
+          </div>
+          <label class="field"><span class="lbl">Angle</span>
+            <div class="sliderrow"><input type="range" id="bgAngle" min="0" max="360" step="5" value="135"><span class="val" id="bgAngleV">135&deg;</span></div>
+          </label>
+        </div>
+        <div id="bgImgRows" hidden class="stack">
+          <button class="btn" id="bgImgBtn" type="button">Choose background image&hellip;</button>
+          <input type="file" id="bgFile" accept="image/*" hidden>
+          <label class="field"><span class="lbl">Zoom</span>
+            <div class="sliderrow"><input type="range" id="bgImgZoom" min="100" max="200" step="1" value="100"><span class="val" id="bgImgZoomV">100%</span></div>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="phead"><h2>Monochrome layer</h2></div>
+      <div class="pbody">
+        <label class="field"><span class="lbl">Derive from</span>
+          <select id="monoMode">
+            <option value="alpha" selected>Artwork silhouette (alpha)</option>
+            <option value="dark">Dark pixels of the artwork</option>
+            <option value="light">Light pixels of the artwork</option>
+            <option value="custom">A separate image I upload</option>
+            <option value="off">Don't generate one</option>
+          </select>
+        </label>
+        <label class="field" id="monoThreshWrap" hidden><span class="lbl">Threshold</span>
+          <div class="sliderrow"><input type="range" id="monoThresh" min="5" max="95" step="1" value="50"><span class="val" id="monoThreshV">50%</span></div>
+        </label>
+        <div id="monoCustomRow" hidden>
+          <button class="btn" id="monoImgBtn" type="button">Choose monochrome source&hellip;</button>
+          <input type="file" id="monoFile" accept="image/*" hidden>
+        </div>
+        <div class="note">Android&nbsp;13+ tints this layer with the user's wallpaper colours. It ships as a white shape on transparency; only its alpha matters.</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="phead"><h2>Round &amp; legacy</h2></div>
+      <div class="pbody">
+        <label class="field"><span class="lbl">Artwork size on the flat icon</span>
+          <div class="sliderrow"><input type="range" id="lgScale" min="40" max="100" step="1" value="92"><span class="val" id="lgScaleV">92%</span></div>
+        </label>
+        <label class="field"><span class="lbl">Legacy corner radius</span>
+          <div class="sliderrow"><input type="range" id="lgRadius" min="0" max="50" step="1" value="20"><span class="val" id="lgRadiusV">20%</span></div>
+        </label>
+        <label class="check"><input type="checkbox" id="lgAuto" checked>
+          <span>Match the adaptive framing automatically
+            <span class="hint">Keeps the flat icons looking the same size as the masked one.</span></span></label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="phead"><h2>Also export</h2></div>
+      <div class="pbody">
+        <label class="check"><input type="checkbox" id="exRound" checked><span>Round icons <span class="hint">192 down to 48 &middot; deprecated in Unity 6 but still read on Android 7.1</span></span></label>
+        <label class="check"><input type="checkbox" id="exLegacy" checked><span>Legacy icons <span class="hint">192 down to 48 &middot; the fallback Unity uses when adaptive slots are empty</span></span></label>
+        <label class="check"><input type="checkbox" id="exStore" checked><span>Play Store icon <span class="hint">512&times;512, opaque, square corners</span></span></label>
+        <label class="check"><input type="checkbox" id="exTv"><span>Android TV banner <span class="hint">320&times;180, for Android TV Compatibility builds</span></span></label>
+        <label class="check"><input type="checkbox" id="exNotif"><span>Notification small icons <span class="hint">White silhouettes, 96 down to 24, for the Mobile Notifications package</span></span></label>
+        <label class="check"><input type="checkbox" id="exScript" checked><span>Unity Editor assign script <span class="hint">Adds a menu item that wires every texture into Player Settings</span></span></label>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ RIGHT: PREVIEW + EXPORT ============ -->
+  <div>
+    <section class="panel">
+      <div class="phead"><h2>Launcher masks</h2><span class="status" id="maskNote"></span></div>
+      <div class="pbody">
+        <div id="previewEmpty" class="empty">Load an icon to see it masked the way each launcher will draw it.</div>
+        <div class="masks" id="maskRow" hidden>
+          <div class="mask m-circle"><div class="stage"><canvas id="pvCircle" width="208" height="208"></canvas></div><span class="cap">Circle</span></div>
+          <div class="mask m-squircle"><div class="stage"><canvas id="pvSquircle" width="208" height="208"></canvas></div><span class="cap">Squircle</span></div>
+          <div class="mask m-rounded"><div class="stage"><canvas id="pvRounded" width="208" height="208"></canvas></div><span class="cap">Rounded</span></div>
+          <div class="mask m-square"><div class="stage"><canvas id="pvSquare" width="208" height="208"></canvas></div><span class="cap">Square</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="layersPanel" hidden>
+      <div class="phead"><h2>Layers as Unity will import them</h2>
+        <label class="check" style="font-size:12px"><input type="checkbox" id="showGuides" checked><span>Guides</span></label>
+      </div>
+      <div class="pbody">
+        <div class="bigstage">
+          <div class="layerbox"><canvas id="lyBg" class="cv guide-host" width="216" height="216" style="width:150px;height:150px"></canvas><span class="cap">Background</span></div>
+          <div class="layerbox"><canvas id="lyFg" class="cv guide-host" width="216" height="216" style="width:150px;height:150px"></canvas><span class="cap">Foreground</span></div>
+          <div class="layerbox" id="monoBox"><canvas id="lyMono" class="cv" width="216" height="216" style="width:150px;height:150px"></canvas><span class="cap">Monochrome</span></div>
+          <div class="layerbox"><canvas id="lyRound" class="cv" width="216" height="216" style="width:150px;height:150px;border-radius:50%"></canvas><span class="cap">Round</span></div>
+          <div class="layerbox"><canvas id="lyLegacy" class="cv" width="216" height="216" style="width:150px;height:150px"></canvas><span class="cap">Legacy</span></div>
+        </div>
+        <hr class="sep">
+        <div class="themedemo">
+          <span class="lbl">Themed icon on</span>
+          <span id="themeSwatches"></span>
+          <canvas id="lyThemed" width="208" height="208" style="width:88px;height:88px;border-radius:50%;border:1px solid var(--line)"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="phead"><h2>Export</h2><span class="status" id="status"></span></div>
+      <div class="pbody">
+        <div class="row wrapy">
+          <button class="btn primary" id="zipBtn" type="button" disabled>Download icon pack (.zip)</button>
+          <button class="btn" id="fgOnlyBtn" type="button" disabled>Foreground 432 only</button>
+        </div>
+        <div class="tablewrap">
+          <table class="sizes">
+            <thead><tr><th>Unity slot</th><th>Density</th><th>Pixels</th><th>Files</th></tr></thead>
+            <tbody id="sizeTable"></tbody>
+          </table>
+        </div>
+        <div class="note">In Unity: <strong>Project Settings &rsaquo; Player &rsaquo; Android &rsaquo; Icon</strong>. Drop the folder into <code>Assets/</code> first, then run <code>Tools &rsaquo; Android Icons &rsaquo; Assign Generated Icons</code> from the included script.</div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<p class="foot">Everything runs in this page. No image ever leaves your machine.</p>
+</div>
+<script>
+"use strict";
+
+/* ---------- Unity's Android icon slots ---------- */
+const ADAPTIVE = [[432,"xxxhdpi"],[324,"xxhdpi"],[216,"xhdpi"],[162,"hdpi"],[108,"mdpi"]];
+const FLAT     = [[192,"xxxhdpi"],[144,"xxhdpi"],[96,"xhdpi"],[72,"hdpi"],[48,"mdpi"]];
+const NOTIF    = [[96,"xxxhdpi"],[72,"xxhdpi"],[48,"xhdpi"],[36,"hdpi"],[24,"mdpi"]];
+const SAFE = 66/108, WINDOW = 72/108;
+
+const $ = (id) => document.getElementById(id);
+
+const st = {
+  src:null, srcFull:null, bgImg:null, monoImg:null,
+  avg:"#1b2430", edge:"#1b2430", palette:[], pickTarget:"c1",
+  bgMode:"solid", c1:"#1b2430", c2:"#3ddc84", angle:135, bgZoom:100,
+  fgScale:61, fgX:0, fgY:0, trim:true,
+  monoMode:"alpha", monoThresh:50,
+  lgScale:92, lgRadius:20, lgAuto:true,
+  guides:true, themeIdx:0
+};
+
+const THEMES = [
+  {name:"Sage",   bg:"#dbe7dd", fg:"#2c4a34"},
+  {name:"Slate",  bg:"#3a4550", fg:"#cfe0ef"},
+  {name:"Clay",   bg:"#f0ddd2", fg:"#6b3a24"},
+  {name:"Violet", bg:"#2b2440", fg:"#ddd0ff"}
+];
+
+/* ---------- theme toggle ---------- */
+(function(){
+  const modes = ["system","light","dark"];
+  let i = 0;
+  try { const s = localStorage.getItem("iconforge.theme"); if (s) i = Math.max(0, modes.indexOf(s)); } catch(e){}
+  function apply(){
+    const m = modes[i];
+    if (m === "system") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", m);
+    $("themeBtn").textContent = "Theme: " + m;
+    try { localStorage.setItem("iconforge.theme", m); } catch(e){}
+  }
+  $("themeBtn").addEventListener("click", () => { i = (i+1) % modes.length; apply(); renderAll(); });
+  apply();
+})();
+
+/* ---------- helpers ---------- */
+function mkCanvas(w,h){ const c = document.createElement("canvas"); c.width=w; c.height=h; return c; }
+function ctxOf(c){ const x = c.getContext("2d",{willReadFrequently:false}); x.imageSmoothingEnabled=true; x.imageSmoothingQuality="high"; return x; }
+function clampNum(v,a,b){ return Math.min(b,Math.max(a,v)); }
+function hexOk(v){ return /^#[0-9a-f]{6}$/i.test(v); }
+
+function loadImageFile(file){
+  /* Read as a data URL, not a blob URL: keeps the canvas untainted when this page
+     is opened straight off disk with a file:// address. */
+  return new Promise((res,rej)=>{
+    const fr = new FileReader();
+    fr.onerror = () => rej(new Error("That file could not be read."));
+    fr.onload = () => {
+      const img = new Image();
+      img.onload = () => res({img, name:file.name});
+      img.onerror = () => rej(new Error("That file could not be decoded as an image."));
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+
+/* Rasterise to a working canvas, optionally cropped to the artwork's alpha bounds. */
+function bake(img, doTrim){
+  let w = img.naturalWidth || 1024, h = img.naturalHeight || 1024;
+  const longest = Math.max(w,h);
+  const target = clampNum(longest, 512, 2048);
+  const k = target/longest;
+  w = Math.max(1, Math.round(w*k)); h = Math.max(1, Math.round(h*k));
+  const full = mkCanvas(w,h);
+  ctxOf(full).drawImage(img,0,0,w,h);
+
+  const data = full.getContext("2d").getImageData(0,0,w,h);
+  const px = data.data;
+  let minX=w, minY=h, maxX=-1, maxY=-1;
+  let rs=0, gs=0, bs=0, n=0, ers=0, egs=0, ebs=0, en=0;
+  const band = Math.max(1, Math.round(Math.min(w,h)*0.08));
+  for (let y=0; y<h; y++){
+    for (let x=0; x<w; x++){
+      const i = (y*w+x)*4, a = px[i+3];
+      if (a > 8){
+        if (x<minX) minX=x; if (x>maxX) maxX=x;
+        if (y<minY) minY=y; if (y>maxY) maxY=y;
+        if (a > 128){
+          rs+=px[i]; gs+=px[i+1]; bs+=px[i+2]; n++;
+          if (x<band || y<band || x>=w-band || y>=h-band){ ers+=px[i]; egs+=px[i+1]; ebs+=px[i+2]; en++; }
+        }
+      }
+    }
+  }
+  if (maxX < 0){ minX=0; minY=0; maxX=w-1; maxY=h-1; }
+  const palette = extractPalette(px, w, h, 6);
+  const avg  = n ? rgbHex(rs/n, gs/n, bs/n) : "#1b2430";
+  const edge = en ? rgbHex(ers/en, egs/en, ebs/en) : avg;
+
+  let out = full;
+  if (doTrim && (minX>0 || minY>0 || maxX<w-1 || maxY<h-1)){
+    const cw = maxX-minX+1, ch = maxY-minY+1;
+    out = mkCanvas(cw,ch);
+    ctxOf(out).drawImage(full, minX, minY, cw, ch, 0, 0, cw, ch);
+  }
+  return {canvas:out, full, avg, edge, palette};
+}
+
+/* Bucket opaque pixels into coarse colour bins, then keep the most common
+   bins that are not near-duplicates of one already kept. */
+function extractPalette(px, w, h, max){
+  const step = Math.max(1, Math.round(Math.sqrt((w*h)/24000)));
+  const bins = new Map();
+  for (let y=0; y<h; y+=step){
+    for (let x=0; x<w; x+=step){
+      const i = (y*w+x)*4;
+      if (px[i+3] < 128) continue;
+      const r = px[i], g = px[i+1], b = px[i+2];
+      const key = ((r>>4)<<8) | ((g>>4)<<4) | (b>>4);
+      let e = bins.get(key);
+      if (!e){ e = {n:0,r:0,g:0,b:0}; bins.set(key,e); }
+      e.n++; e.r += r; e.g += g; e.b += b;
+    }
+  }
+  const list = [...bins.values()].map(e => ({n:e.n, r:e.r/e.n, g:e.g/e.n, b:e.b/e.n}));
+  list.sort((a,b) => b.n - a.n);
+  const kept = [];
+  for (const c of list){
+    if (kept.some(o => Math.abs(o.r-c.r) + Math.abs(o.g-c.g) + Math.abs(o.b-c.b) < 54)) continue;
+    kept.push(c);
+    if (kept.length >= max) break;
+  }
+  return kept.map(c => rgbHex(c.r, c.g, c.b));
+}
+function rgbHex(r,g,b){
+  return "#" + [r,g,b].map(v => clampNum(Math.round(v),0,255).toString(16).padStart(2,"0")).join("");
+}
+function shade(hex, amount){
+  const n = parseInt(hex.slice(1), 16);
+  const r = (n>>16)&255, g = (n>>8)&255, b = n&255;
+  const t = amount < 0 ? 0 : 255, k = Math.abs(amount);
+  return rgbHex(r + (t-r)*k, g + (t-g)*k, b + (t-b)*k);
+}
+
+/* ---------- layer painters ---------- */
+function paintBackground(cx,S){
+  cx.clearRect(0,0,S,S);
+  if (st.bgMode === "image" && st.bgImg){
+    cx.fillStyle = st.c1; cx.fillRect(0,0,S,S);
+    coverDraw(cx, st.bgImg, S, S, st.bgZoom/100);
+    return;
+  }
+  if (st.bgMode === "gradient"){
+    const a = st.angle * Math.PI/180;
+    const vx = Math.cos(a), vy = Math.sin(a);
+    const L = S * (Math.abs(vx) + Math.abs(vy)) / 2;
+    const g = cx.createLinearGradient(S/2 - vx*L, S/2 - vy*L, S/2 + vx*L, S/2 + vy*L);
+    g.addColorStop(0, st.c1); g.addColorStop(1, st.c2);
+    cx.fillStyle = g; cx.fillRect(0,0,S,S);
+    return;
+  }
+  cx.fillStyle = st.c1; cx.fillRect(0,0,S,S);
+}
+
+function coverDraw(cx, src, W, H, zoom){
+  const k = Math.max(W/src.width, H/src.height) * (zoom||1);
+  const w = src.width*k, h = src.height*k;
+  cx.drawImage(src, (W-w)/2, (H-h)/2, w, h);
+}
+
+function paintArt(cx, S, scalePct, src){
+  if (!src) return;
+  const box = S * scalePct/100;
+  const k = Math.min(box/src.width, box/src.height);
+  const w = src.width*k, h = src.height*k;
+  cx.drawImage(src, (S-w)/2 + st.fgX/100*S, (S-h)/2 + st.fgY/100*S, w, h);
+}
+
+function paintForeground(cx,S){
+  cx.clearRect(0,0,S,S);
+  paintArt(cx, S, st.fgScale, st.src);
+}
+
+function paintMonochrome(cx,S){
+  cx.clearRect(0,0,S,S);
+  if (st.monoMode === "off") return;
+  const src = (st.monoMode === "custom") ? (st.monoImg || st.src) : st.src;
+  if (!src) return;
+  const tmp = mkCanvas(S,S);
+  paintArt(ctxOf(tmp), S, st.fgScale, src);
+  const tx = tmp.getContext("2d");
+  const d = tx.getImageData(0,0,S,S), p = d.data;
+  const mode = (st.monoMode === "custom") ? "alpha" : st.monoMode;
+  const t = st.monoThresh/100 * 255, soft = 26;
+  for (let i=0; i<p.length; i+=4){
+    const a = p[i+3];
+    let keep = a/255;
+    if (mode !== "alpha" && a > 0){
+      const luma = 0.2126*p[i] + 0.7152*p[i+1] + 0.0722*p[i+2];
+      const dist = (mode === "dark") ? (t - luma) : (luma - t);
+      keep *= clampNum((dist + soft) / (soft*2), 0, 1);
+    }
+    p[i] = 255; p[i+1] = 255; p[i+2] = 255; p[i+3] = Math.round(keep*255);
+  }
+  tx.putImageData(d,0,0);
+  cx.drawImage(tmp,0,0);
+}
+
+function roundRectPath(cx,x,y,w,h,r){
+  r = Math.min(r, w/2, h/2);
+  cx.beginPath();
+  cx.moveTo(x+r,y);
+  cx.lineTo(x+w-r,y); cx.arcTo(x+w,y,x+w,y+r,r);
+  cx.lineTo(x+w,y+h-r); cx.arcTo(x+w,y+h,x+w-r,y+h,r);
+  cx.lineTo(x+r,y+h);   cx.arcTo(x,y+h,x,y+h-r,r);
+  cx.lineTo(x,y+r);     cx.arcTo(x,y,x+r,y,r);
+  cx.closePath();
+}
+
+/* Flat (round / legacy / store) icon: background + artwork, then a shape mask. */
+function paintFlat(cx, S, shape){
+  cx.clearRect(0,0,S,S);
+  const tmp = mkCanvas(S,S), tc = ctxOf(tmp);
+  paintBackground(tc,S);
+  paintArt(tc, S, st.lgScale, st.src);
+  cx.save();
+  if (shape === "round"){ cx.beginPath(); cx.arc(S/2,S/2,S/2,0,Math.PI*2); cx.clip(); }
+  else if (shape === "legacy"){ roundRectPath(cx,0,0,S,S,S*st.lgRadius/100); cx.clip(); }
+  cx.drawImage(tmp,0,0);
+  cx.restore();
+}
+
+function paintBanner(cx,W,H){
+  cx.clearRect(0,0,W,H);
+  if (st.bgMode === "image" && st.bgImg){ cx.fillStyle = st.c1; cx.fillRect(0,0,W,H); coverDraw(cx, st.bgImg, W, H, st.bgZoom/100); }
+  else if (st.bgMode === "gradient"){
+    const g = cx.createLinearGradient(0,0,W,H);
+    g.addColorStop(0, st.c1); g.addColorStop(1, st.c2);
+    cx.fillStyle = g; cx.fillRect(0,0,W,H);
+  } else { cx.fillStyle = st.c1; cx.fillRect(0,0,W,H); }
+  if (st.src){
+    const box = H*0.68;
+    const k = Math.min(box/st.src.width, box/st.src.height);
+    const w = st.src.width*k, h = st.src.height*k;
+    cx.drawImage(st.src, (W-w)/2, (H-h)/2, w, h);
+  }
+}
+
+function paintNotification(cx,S){
+  cx.clearRect(0,0,S,S);
+  if (!st.src) return;
+  const src = st.monoImg || st.src;
+  const tmp = mkCanvas(S,S), tc = ctxOf(tmp);
+  const box = S*0.84;
+  const k = Math.min(box/src.width, box/src.height);
+  const w = src.width*k, h = src.height*k;
+  tc.drawImage(src, (S-w)/2, (S-h)/2, w, h);
+  const tx = tmp.getContext("2d");
+  const d = tx.getImageData(0,0,S,S), p = d.data;
+  for (let i=0; i<p.length; i+=4){ p[i]=255; p[i+1]=255; p[i+2]=255; }
+  tx.putImageData(d,0,0);
+  cx.drawImage(tmp,0,0);
+}
+
+/* ---------- preview rendering ---------- */
+function paintMaskPreview(canvas){
+  const cx = ctxOf(canvas);
+  const V = canvas.width;                 // visible 72dp window
+  const S = Math.round(V * 108/72);       // full 108dp layer
+  const off = Math.round(S * 18/108);
+  const tmp = mkCanvas(S,S), tc = ctxOf(tmp);
+  paintBackground(tc,S);
+  paintForeground2(tc,S);
+  cx.clearRect(0,0,V,V);
+  cx.drawImage(tmp, -off, -off);
+}
+function paintForeground2(cx,S){ paintArt(cx, S, st.fgScale, st.src); }
+
+function drawGuides(cx,S){
+  if (!st.guides) return;
+  cx.save();
+  cx.lineWidth = Math.max(1, S/216);
+  cx.setLineDash([S/36, S/36]);
+  cx.strokeStyle = "rgba(255,80,80,.85)";
+  cx.beginPath(); cx.arc(S/2,S/2,S*SAFE/2,0,Math.PI*2); cx.stroke();
+  cx.strokeStyle = "rgba(61,220,132,.9)";
+  cx.beginPath(); cx.arc(S/2,S/2,S*WINDOW/2,0,Math.PI*2); cx.stroke();
+  cx.restore();
+}
+
+function paintThemed(canvas){
+  const cx = ctxOf(canvas);
+  const V = canvas.width, S = Math.round(V*108/72), off = Math.round(S*18/108);
+  const th = THEMES[st.themeIdx];
+  cx.clearRect(0,0,V,V);
+  cx.fillStyle = th.bg; cx.fillRect(0,0,V,V);
+  const tmp = mkCanvas(S,S);
+  paintMonochrome(ctxOf(tmp), S);
+  const tint = mkCanvas(S,S), tt = ctxOf(tint);
+  tt.drawImage(tmp,0,0);
+  tt.globalCompositeOperation = "source-in";
+  tt.fillStyle = th.fg; tt.fillRect(0,0,S,S);
+  cx.drawImage(tint, -off, -off);
+}
+
+function renderAll(){
+  if (!st.src){
+    $("previewEmpty").hidden = false; $("maskRow").hidden = true; $("layersPanel").hidden = true;
+    return;
+  }
+  $("previewEmpty").hidden = true; $("maskRow").hidden = false; $("layersPanel").hidden = false;
+  ["pvCircle","pvSquircle","pvRounded","pvSquare"].forEach(id => paintMaskPreview($(id)));
+
+  const bg = $("lyBg"), fg = $("lyFg"), S = bg.width;
+  const bc = ctxOf(bg); paintBackground(bc,S); drawGuides(bc,S);
+  const fc = ctxOf(fg); paintForeground(fc,S); drawGuides(fc,S);
+  paintMonochrome(ctxOf($("lyMono")), $("lyMono").width);
+  paintFlat(ctxOf($("lyRound")), $("lyRound").width, "round");
+  paintFlat(ctxOf($("lyLegacy")), $("lyLegacy").width, "legacy");
+  paintThemed($("lyThemed"));
+  $("monoBox").hidden = (st.monoMode === "off");
+  $("maskNote").textContent = "Red = 66dp safe zone  Green = 72dp mask window";
+}
+
+/* ---------- size table ---------- */
+function buildTable(){
+  const rows = [];
+  const monoOn = st.monoMode !== "off";
+  ADAPTIVE.forEach(([s,d]) => rows.push(["Adaptive", d, s + " x " + s, monoOn ? "background, foreground, monochrome" : "background, foreground"]));
+  if ($("exRound").checked)  FLAT.forEach(([s,d]) => rows.push(["Round", d, s + " x " + s, "1"]));
+  if ($("exLegacy").checked) FLAT.forEach(([s,d]) => rows.push(["Legacy", d, s + " x " + s, "1"]));
+  if ($("exStore").checked)  rows.push(["Play Store listing", "-", "512 x 512", "1"]);
+  if ($("exTv").checked)     rows.push(["Android TV banner", "-", "320 x 180", "1"]);
+  if ($("exNotif").checked)  NOTIF.forEach(([s,d]) => rows.push(["Notification small", d, s + " x " + s, "1"]));
+  $("sizeTable").innerHTML = rows.map(r =>
+    "<tr><td>" + r[0] + "</td><td class='num'>" + r[1] + "</td><td class='num'>" + r[2] + "</td><td class='num'>" + r[3] + "</td></tr>"
+  ).join("");
+}
+
+/* ---------- zip (stored, no deflate: PNGs are already compressed) ---------- */
+let CRC_TABLE = null;
+function crc32(u8){
+  if (!CRC_TABLE){
+    CRC_TABLE = new Int32Array(256);
+    for (let n=0; n<256; n++){
+      let c = n;
+      for (let k=0; k<8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      CRC_TABLE[n] = c;
+    }
+  }
+  let crc = -1;
+  for (let i=0; i<u8.length; i++) crc = (crc >>> 8) ^ CRC_TABLE[(crc ^ u8[i]) & 0xFF];
+  return (crc ^ -1) >>> 0;
+}
+function dosStamp(d){
+  return {
+    time: ((d.getHours()<<11) | (d.getMinutes()<<5) | (d.getSeconds()>>1)) & 0xFFFF,
+    date: (((d.getFullYear()-1980)<<9) | ((d.getMonth()+1)<<5) | d.getDate()) & 0xFFFF
+  };
+}
+function makeZip(files){
+  const enc = new TextEncoder(), stamp = dosStamp(new Date());
+  const body = [], central = [];
+  let offset = 0;
+  for (const f of files){
+    const nb = enc.encode(f.name), crc = crc32(f.data), len = f.data.length;
+    const lh = new Uint8Array(30 + nb.length), lv = new DataView(lh.buffer);
+    lv.setUint32(0, 0x04034b50, true); lv.setUint16(4, 20, true); lv.setUint16(6, 0, true);
+    lv.setUint16(8, 0, true); lv.setUint16(10, stamp.time, true); lv.setUint16(12, stamp.date, true);
+    lv.setUint32(14, crc, true); lv.setUint32(18, len, true); lv.setUint32(22, len, true);
+    lv.setUint16(26, nb.length, true); lv.setUint16(28, 0, true);
+    lh.set(nb, 30);
+    const ch = new Uint8Array(46 + nb.length), cv = new DataView(ch.buffer);
+    cv.setUint32(0, 0x02014b50, true); cv.setUint16(4, 20, true); cv.setUint16(6, 20, true);
+    cv.setUint16(8, 0, true); cv.setUint16(10, 0, true);
+    cv.setUint16(12, stamp.time, true); cv.setUint16(14, stamp.date, true);
+    cv.setUint32(16, crc, true); cv.setUint32(20, len, true); cv.setUint32(24, len, true);
+    cv.setUint16(28, nb.length, true); cv.setUint32(42, offset, true);
+    ch.set(nb, 46);
+    body.push(lh, f.data); central.push(ch);
+    offset += lh.length + len;
+  }
+  let cdSize = 0; for (const c of central) cdSize += c.length;
+  const end = new Uint8Array(22), ev = new DataView(end.buffer);
+  ev.setUint32(0, 0x06054b50, true);
+  ev.setUint16(8, central.length, true); ev.setUint16(10, central.length, true);
+  ev.setUint32(12, cdSize, true); ev.setUint32(16, offset, true);
+  return new Blob(body.concat(central, [end]), {type:"application/zip"});
+}
+
+async function pngBytes(canvas){
+  const blob = await new Promise(r => canvas.toBlob(r, "image/png"));
+  return new Uint8Array(await blob.arrayBuffer());
+}
+function saveBlob(blob, name){
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+
+/* ---------- generated companion files ---------- */
+function editorScript(){
+return `// UnityAndroidIconImporter.cs
+// Generated by Android Icon Forge. Put this file anywhere under Assets/Editor/.
+// Menu: Tools > Android Icons > Assign Generated Icons...
+#if UNITY_EDITOR
+using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
+using UnityEditor.Build;
+using UnityEngine;
+
+public static class UnityAndroidIconImporter
+{
+    [MenuItem("Tools/Android Icons/Assign Generated Icons...")]
+    public static void Assign()
+    {
+        string abs = EditorUtility.OpenFolderPanel(
+            "Select the UnityAndroidIcons folder (must be inside Assets)", Application.dataPath, "");
+        if (string.IsNullOrEmpty(abs)) return;
+
+        abs = abs.Replace("\\\\", "/");
+        string dataPath = Application.dataPath.Replace("\\\\", "/");
+        if (!abs.StartsWith(dataPath))
+        {
+            EditorUtility.DisplayDialog("Android Icons",
+                "That folder is outside this project. Copy the icon folder into Assets/ first.", "OK");
+            return;
+        }
+        string rel = "Assets" + abs.Substring(dataPath.Length);
+
+        Dictionary<string, Texture2D> map = Collect(rel);
+        if (map.Count == 0)
+        {
+            EditorUtility.DisplayDialog("Android Icons", "No icon textures found in " + rel, "OK");
+            return;
+        }
+
+        int slots = 0;
+        slots += Apply(AndroidPlatformIconKind.Adaptive, map, "adaptive_background", "adaptive_foreground", "adaptive_monochrome");
+        slots += Apply(AndroidPlatformIconKind.Round,    map, "round");
+        slots += Apply(AndroidPlatformIconKind.Legacy,   map, "legacy");
+
+        AssetDatabase.SaveAssets();
+        Debug.Log("[Android Icon Forge] Assigned " + slots + " icon slots from " + rel);
+        EditorUtility.DisplayDialog("Android Icons",
+            "Assigned " + slots + " icon slots.\\n\\nCheck Project Settings > Player > Android > Icon.", "OK");
+    }
+
+    // Reads every texture in the folder and keys it as "prefix_size".
+    private static Dictionary<string, Texture2D> Collect(string folder)
+    {
+        var map = new Dictionary<string, Texture2D>();
+        string[] guids = AssetDatabase.FindAssets("t:Texture2D", new[] { folder });
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            string file = Path.GetFileNameWithoutExtension(path);
+            int cut = file.LastIndexOf('_');
+            if (cut <= 0) continue;
+            int size;
+            if (!int.TryParse(file.Substring(cut + 1), out size)) continue;
+
+            Configure(path);
+            var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            if (tex != null) map[file.Substring(0, cut) + "_" + size] = tex;
+        }
+        return map;
+    }
+
+    // Icon textures must stay uncompressed with straight alpha.
+    private static void Configure(string path)
+    {
+        var imp = AssetImporter.GetAtPath(path) as TextureImporter;
+        if (imp == null) return;
+        bool dirty = false;
+        if (imp.textureType != TextureImporterType.Default) { imp.textureType = TextureImporterType.Default; dirty = true; }
+        if (!imp.alphaIsTransparency) { imp.alphaIsTransparency = true; dirty = true; }
+        if (imp.mipmapEnabled) { imp.mipmapEnabled = false; dirty = true; }
+        if (imp.npotScale != TextureImporterNPOTScale.None) { imp.npotScale = TextureImporterNPOTScale.None; dirty = true; }
+        if (imp.textureCompression != TextureImporterCompression.Uncompressed) { imp.textureCompression = TextureImporterCompression.Uncompressed; dirty = true; }
+        if (imp.maxTextureSize < 512) { imp.maxTextureSize = 512; dirty = true; }
+        if (dirty) { imp.SaveAndReimport(); }
+    }
+
+    private static int Apply(AndroidPlatformIconKind kind, Dictionary<string, Texture2D> map, params string[] layerPrefixes)
+    {
+        PlatformIcon[] icons;
+        try { icons = PlayerSettings.GetPlatformIcons(NamedBuildTarget.Android, kind); }
+        catch (System.Exception e) { Debug.LogWarning("[Android Icon Forge] " + kind + " unavailable: " + e.Message); return 0; }
+        if (icons == null || icons.Length == 0) return 0;
+
+        int filled = 0;
+        foreach (PlatformIcon icon in icons)
+        {
+            int allowed = Mathf.Min(layerPrefixes.Length, Mathf.Max(1, icon.maxLayerCount));
+            var layers = new List<Texture2D>();
+            for (int i = 0; i < allowed; i++)
+            {
+                Texture2D tex;
+                map.TryGetValue(layerPrefixes[i] + "_" + icon.width, out tex);
+                layers.Add(tex);
+            }
+            while (layers.Count > 1 && layers[layers.Count - 1] == null) layers.RemoveAt(layers.Count - 1);
+            if (layers.Count == 0 || layers[0] == null)
+            {
+                Debug.LogWarning("[Android Icon Forge] No texture for " + kind + " at " + icon.width + "px");
+                continue;
+            }
+            icon.SetTextures(layers.ToArray());
+            filled++;
+        }
+        PlayerSettings.SetPlatformIcons(NamedBuildTarget.Android, kind, icons);
+        return filled;
+    }
+}
+#endif
+`;
+}
+
+function readmeText(){
+  const monoOn = st.monoMode !== "off";
+  return [
+    "Android Icon Forge - generated icon pack",
+    "========================================",
+    "",
+    "Generated: " + new Date().toISOString(),
+    "",
+    "WHAT IS IN HERE",
+    "---------------",
+    "Adaptive/Background   " + ADAPTIVE.map(a => a[0]).join(", ") + " px  (Unity: Adaptive, layer 0)",
+    "Adaptive/Foreground   " + ADAPTIVE.map(a => a[0]).join(", ") + " px  (Unity: Adaptive, layer 1)",
+    monoOn ? "Adaptive/Monochrome   " + ADAPTIVE.map(a => a[0]).join(", ") + " px  (Unity 6: Adaptive, layer 2 - Android 13+ themed icons)" : "Adaptive/Monochrome   not generated",
+    "Round/                " + FLAT.map(a => a[0]).join(", ") + " px  (Unity: Round - deprecated, Android 7.1)",
+    "Legacy/               " + FLAT.map(a => a[0]).join(", ") + " px  (Unity: Legacy - deprecated fallback)",
+    "Store/                512 px, opaque, square corners (Google Play listing, not a build asset)",
+    "TV/                   320x180 banner (only if Android TV Compatibility is on)",
+    "Notification/         white silhouettes for the Mobile Notifications package",
+    "",
+    "THE FAST WAY",
+    "------------",
+    "1. Copy this whole folder into your project's Assets/ folder.",
+    "2. Copy Editor/UnityAndroidIconImporter.cs into Assets/Editor/ (create it if needed).",
+    "3. In Unity: Tools > Android Icons > Assign Generated Icons... and pick this folder.",
+    "4. Verify in Project Settings > Player > Android > Icon.",
+    "",
+    "THE MANUAL WAY",
+    "--------------",
+    "Project Settings > Player > Android > Icon. Set the drop-down to Adaptive and drag the",
+    "Background, Foreground and Monochrome texture of each size into the matching row. Repeat",
+    "for Round and Legacy. Sizes are in the file names.",
+    "",
+    "IMPORT SETTINGS",
+    "---------------",
+    "Texture Type: Default, Alpha Is Transparency: on, Generate Mip Maps: off,",
+    "Compression: None, Max Size: at least 512. The Editor script applies these for you.",
+    "",
+    "NOTES",
+    "-----",
+    "- Artwork size used: " + st.fgScale + "% of the 108dp adaptive canvas (61% or less is always safe).",
+    "- Android crops the outer 18dp ring of the adaptive layers, so the background must be full-bleed.",
+    "- The monochrome layer is white on transparency; Android recolours it from the user's wallpaper.",
+    "- The Play Store icon must not be uploaded as a build asset. Attach it in the Play Console listing.",
+    ""
+  ].join("\n");
+}
+
+/* ---------- export ---------- */
+async function exportPack(){
+  const btn = $("zipBtn");
+  btn.disabled = true;
+  const say = (m, bad) => { const s = $("status"); s.textContent = m; s.className = bad ? "status err" : "status"; };
+  try {
+    const files = [];
+    const root = "UnityAndroidIcons/";
+    const enc = new TextEncoder();
+    const monoOn = st.monoMode !== "off";
+    const add = async (name, painter, w, h) => {
+      const c = mkCanvas(w, h || w);
+      painter(ctxOf(c), w, h || w);
+      files.push({name: root + name, data: await pngBytes(c)});
+    };
+
+    for (const [s] of ADAPTIVE){
+      say("Rendering adaptive " + s + "px...");
+      await add("Adaptive/Background/adaptive_background_" + s + ".png", (cx,S) => paintBackground(cx,S), s);
+      await add("Adaptive/Foreground/adaptive_foreground_" + s + ".png", (cx,S) => paintForeground(cx,S), s);
+      if (monoOn) await add("Adaptive/Monochrome/adaptive_monochrome_" + s + ".png", (cx,S) => paintMonochrome(cx,S), s);
+    }
+    if ($("exRound").checked)
+      for (const [s] of FLAT){ say("Rendering round " + s + "px..."); await add("Round/round_" + s + ".png", (cx,S) => paintFlat(cx,S,"round"), s); }
+    if ($("exLegacy").checked)
+      for (const [s] of FLAT){ say("Rendering legacy " + s + "px..."); await add("Legacy/legacy_" + s + ".png", (cx,S) => paintFlat(cx,S,"legacy"), s); }
+    if ($("exStore").checked){ say("Rendering store icon..."); await add("Store/play_store_512.png", (cx,S) => paintFlat(cx,S,"square"), 512); }
+    if ($("exTv").checked){ say("Rendering TV banner..."); await add("TV/tv_banner_320x180.png", (cx,W,H) => paintBanner(cx,W,H), 320, 180); }
+    if ($("exNotif").checked)
+      for (const [s] of NOTIF){ say("Rendering notification " + s + "px..."); await add("Notification/notification_" + s + ".png", (cx,S) => paintNotification(cx,S), s); }
+
+    if ($("exScript").checked)
+      files.push({name: root + "Editor/UnityAndroidIconImporter.cs", data: enc.encode(editorScript())});
+    files.push({name: root + "README.txt", data: enc.encode(readmeText())});
+
+    say("Packing " + files.length + " files...");
+    saveBlob(makeZip(files), "UnityAndroidIcons.zip");
+    say(files.length + " files exported.");
+  } catch (err){
+    say("Export failed: " + err.message, true);
+    console.error(err);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+/* ---------- wiring ---------- */
+function bindSlider(id, key, fmt){
+  const el = $(id), out = $(id + "V");
+  const sync = () => { st[key] = Number(el.value); out.textContent = fmt(el.value); };
+  el.addEventListener("input", () => { sync(); afterChange(); });
+  sync();
+}
+function syncLegacyAuto(){
+  const el = $("lgScale");
+  el.disabled = st.lgAuto;
+  if (st.lgAuto){
+    const v = clampNum(Math.round(st.fgScale * 108/72), 40, 100);
+    el.value = v; st.lgScale = v; $("lgScaleV").textContent = v + "%";
+  }
+}
+function afterChange(){
+  $("safeWarn").hidden = st.fgScale <= 61;
+  syncLegacyAuto();
+  buildTable();
+  renderAll();
+}
+
+bindSlider("fgScale","fgScale", v => v + "%");
+bindSlider("fgX","fgX", v => String(v));
+bindSlider("fgY","fgY", v => String(v));
+bindSlider("bgAngle","angle", v => v + "°");
+bindSlider("bgImgZoom","bgZoom", v => v + "%");
+bindSlider("monoThresh","monoThresh", v => v + "%");
+bindSlider("lgScale","lgScale", v => v + "%");
+bindSlider("lgRadius","lgRadius", v => v + "%");
+
+$("bgMode").addEventListener("change", e => {
+  st.bgMode = e.target.value;
+  $("bgGradRows").hidden = st.bgMode !== "gradient";
+  $("bgImgRows").hidden  = st.bgMode !== "image";
+  $("pickTargetRow").hidden = st.bgMode !== "gradient";
+  if (st.bgMode !== "gradient") st.pickTarget = "c1";
+  markActiveChip();
+  afterChange();
+});
+$("monoMode").addEventListener("change", e => {
+  st.monoMode = e.target.value;
+  $("monoThreshWrap").hidden = !(st.monoMode === "dark" || st.monoMode === "light");
+  $("monoCustomRow").hidden  = st.monoMode !== "custom";
+  afterChange();
+});
+
+function bindColor(picker, hex, key){
+  const p = $(picker), h = $(hex);
+  p.addEventListener("input", () => { st[key] = p.value; h.value = p.value; markActiveChip(); renderAll(); });
+  h.addEventListener("input", () => { if (hexOk(h.value)){ st[key] = h.value.toLowerCase(); p.value = st[key]; markActiveChip(); renderAll(); } });
+}
+bindColor("bgC1","bgC1Hex","c1");
+bindColor("bgC2","bgC2Hex","c2");
+
+/* ---------- colour picker: palette chips + eyedropper ---------- */
+function setColor(key, hex){
+  if (!hexOk(hex)) return;
+  hex = hex.toLowerCase();
+  st[key] = hex;
+  const ids = (key === "c1") ? ["bgC1","bgC1Hex"] : ["bgC2","bgC2Hex"];
+  $(ids[0]).value = hex; $(ids[1]).value = hex;
+  markActiveChip();
+  renderAll();
+}
+function activeTarget(){ return (st.bgMode === "gradient") ? st.pickTarget : "c1"; }
+function markActiveChip(){
+  const cur = st[activeTarget()].toLowerCase();
+  [...$("paletteChips").children].forEach(c =>
+    c.setAttribute("aria-pressed", String((c.dataset.hex || "").toLowerCase() === cur)));
+}
+function buildChips(){
+  const box = $("pickerBox");
+  if (!st.src || !st.palette.length){ box.hidden = true; $("paletteChips").innerHTML = ""; return; }
+  box.hidden = false;
+  const seen = new Set();
+  const entries = [];
+  const push = (hex, label) => {
+    const k = hex.toLowerCase();
+    if (seen.has(k)) return;
+    seen.add(k); entries.push({hex:k, label});
+  };
+  st.palette.forEach((h,i) => push(h, i === 0 ? "Most used colour" : "From your artwork"));
+  push(st.edge, "Colour around the edges");
+  push(shade(st.palette[0], -0.55), "Most used colour, darkened");
+  push(shade(st.palette[0], 0.45), "Most used colour, lightened");
+  push("#ffffff", "White");
+  push("#000000", "Black");
+  $("paletteChips").innerHTML = entries.map(e =>
+    "<button type='button' class='chip' data-hex='" + e.hex + "' title='" + e.label + " " + e.hex +
+    "' aria-label='" + e.label + " " + e.hex + "' style='background:" + e.hex + "'></button>"
+  ).join("");
+  markActiveChip();
+}
+$("paletteChips").addEventListener("click", e => {
+  const b = e.target.closest(".chip");
+  if (b) setColor(activeTarget(), b.dataset.hex);
+});
+$("pickTargetRow").addEventListener("click", e => {
+  const b = e.target.closest("button[data-target]");
+  if (!b) return;
+  st.pickTarget = b.dataset.target;
+  [...$("pickTargetRow").querySelectorAll("button[data-target]")].forEach(x =>
+    x.setAttribute("aria-pressed", String(x.dataset.target === st.pickTarget)));
+  markActiveChip();
+});
+
+/* eyedropper over the artwork itself */
+function drawEyeCanvas(){
+  const c = $("eyeCanvas"), cx = ctxOf(c);
+  cx.clearRect(0,0,c.width,c.height);
+  const src = st.srcFull;
+  if (!src) return;
+  const sw = src.naturalWidth || st.src.width, sh = src.naturalHeight || st.src.height;
+  const k = Math.min(c.width/sw, c.height/sh);
+  const w = sw*k, h = sh*k;
+  cx.drawImage(src, (c.width-w)/2, (c.height-h)/2, w, h);
+}
+function eyeAt(ev){
+  const c = $("eyeCanvas"), r = c.getBoundingClientRect();
+  const x = Math.floor((ev.clientX - r.left) * c.width / r.width);
+  const y = Math.floor((ev.clientY - r.top) * c.height / r.height);
+  if (x < 0 || y < 0 || x >= c.width || y >= c.height) return null;
+  const d = c.getContext("2d").getImageData(x, y, 1, 1).data;
+  if (d[3] < 16) return null;
+  return rgbHex(d[0], d[1], d[2]);
+}
+$("eyeBtn").addEventListener("click", () => {
+  if (!st.src) return;
+  const stage = $("eyeStage");
+  stage.hidden = !stage.hidden;
+  $("eyeBtn").textContent = stage.hidden ? "Eyedropper" : "Close dropper";
+  if (!stage.hidden){ $("pickerBox").hidden = false; drawEyeCanvas(); }
+});
+$("eyeDone").addEventListener("click", () => {
+  $("eyeStage").hidden = true; $("eyeBtn").textContent = "Eyedropper";
+});
+$("eyeCanvas").addEventListener("mousemove", ev => {
+  const hex = eyeAt(ev);
+  $("eyeSw").style.background = hex || "transparent";
+  $("eyeHex").textContent = hex || "transparent here";
+});
+$("eyeCanvas").addEventListener("click", ev => {
+  const hex = eyeAt(ev);
+  if (hex) setColor(activeTarget(), hex);
+});
+if (window.EyeDropper){
+  const b = $("screenEyeBtn");
+  b.hidden = false;
+  b.addEventListener("click", async () => {
+    try {
+      const res = await new window.EyeDropper().open();
+      setColor(activeTarget(), res.sRGBHex);
+    } catch (err){ /* the user pressed Escape */ }
+  });
+}
+
+["lgAuto","exRound","exLegacy","exStore","exTv","exNotif","exScript","showGuides","trim"].forEach(id => {
+  $(id).addEventListener("change", async () => {
+    if (id === "lgAuto") st.lgAuto = $(id).checked;
+    if (id === "showGuides") st.guides = $(id).checked;
+    if (id === "trim"){
+      st.trim = $(id).checked;
+      if (st.srcFull){
+        const b = bake(st.srcFull, st.trim);
+        st.src = b.canvas; st.avg = b.avg; st.edge = b.edge; st.palette = b.palette;
+        buildChips();
+      }
+    }
+    afterChange();
+  });
+});
+
+/* theme swatches for the themed-icon preview */
+$("themeSwatches").innerHTML = THEMES.map((t,i) =>
+  "<button type='button' class='swatchchip' data-i='" + i + "' title='" + t.name +
+  "' aria-pressed='" + (i===0) + "' style='background:linear-gradient(135deg," + t.bg + " 50%," + t.fg + " 50%)'></button>"
+).join(" ");
+$("themeSwatches").addEventListener("click", e => {
+  const b = e.target.closest(".swatchchip"); if (!b) return;
+  st.themeIdx = Number(b.dataset.i);
+  [...$("themeSwatches").children].forEach((c,i) => c.setAttribute("aria-pressed", String(i === st.themeIdx)));
+  paintThemed($("lyThemed"));
+});
+
+/* ---------- file intake ---------- */
+const drop = $("drop");
+drop.addEventListener("click", () => $("file").click());
+drop.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); $("file").click(); } });
+["dragenter","dragover"].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add("hot"); }));
+["dragleave","drop"].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove("hot"); }));
+drop.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if (f) takeSource(f); });
+$("file").addEventListener("change", e => { const f = e.target.files[0]; if (f) takeSource(f); });
+window.addEventListener("dragover", e => e.preventDefault());
+window.addEventListener("drop", e => e.preventDefault());
+
+async function takeSource(file){
+  const s = $("status");
+  try {
+    const {img, name} = await loadImageFile(file);
+    st.srcFull = img;
+    const b = bake(img, st.trim);
+    st.src = b.canvas; st.avg = b.avg; st.edge = b.edge; st.palette = b.palette;
+    if (st.bgMode === "solid" && st.c1 === "#1b2430"){
+      st.c1 = b.edge; $("bgC1").value = b.edge; $("bgC1Hex").value = b.edge;
+    }
+    const w = img.naturalWidth || "?", h = img.naturalHeight || "?";
+    drop.classList.add("loaded");
+    drop.innerHTML = "<span class='thumb'></span><span><strong>" + name.replace(/[<>&]/g,"") +
+      "</strong><span style='color:var(--ink-3);font-size:12px;display:block'>" + w + " x " + h +
+      " &middot; artwork bounds " + st.src.width + " x " + st.src.height + "</span></span>";
+    drop.querySelector(".thumb").appendChild(img);
+    $("clearBtn").hidden = false;
+    $("zipBtn").disabled = false; $("fgOnlyBtn").disabled = false;
+    buildChips(); drawEyeCanvas();
+    s.className = "status";
+    s.textContent = (w !== "?" && w < 512) ? "Heads up: " + w + "px source is small for a 432px icon." : "";
+    afterChange();
+  } catch (err){
+    s.className = "status err"; s.textContent = err.message;
+  }
+}
+
+$("clearBtn").addEventListener("click", e => {
+  e.stopPropagation();
+  st.src = null; st.srcFull = null; st.palette = [];
+  $("pickerBox").hidden = true; $("eyeStage").hidden = true;
+  $("eyeBtn").textContent = "Eyedropper";
+  drop.classList.remove("loaded");
+  drop.innerHTML = "<strong>Drop your icon here</strong><span>PNG, SVG, JPG or WebP &middot; square, 1024&times;1024 or larger is ideal</span>";
+  $("clearBtn").hidden = true;
+  $("zipBtn").disabled = true; $("fgOnlyBtn").disabled = true;
+  $("file").value = ""; $("status").textContent = "";
+  renderAll();
+});
+
+$("bgImgBtn").addEventListener("click", () => $("bgFile").click());
+$("bgFile").addEventListener("change", async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try { const {img} = await loadImageFile(f); st.bgImg = img; $("bgImgBtn").textContent = "Background: " + f.name; renderAll(); }
+  catch (err){ $("status").className = "status err"; $("status").textContent = err.message; }
+});
+$("monoImgBtn").addEventListener("click", () => $("monoFile").click());
+$("monoFile").addEventListener("change", async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    const {img} = await loadImageFile(f);
+    st.monoImg = bake(img, st.trim).canvas;
+    $("monoImgBtn").textContent = "Monochrome: " + f.name;
+    renderAll();
+  } catch (err){ $("status").className = "status err"; $("status").textContent = err.message; }
+});
+
+$("zipBtn").addEventListener("click", exportPack);
+$("fgOnlyBtn").addEventListener("click", async () => {
+  const c = mkCanvas(432,432);
+  paintForeground(ctxOf(c), 432);
+  saveBlob(await new Promise(r => c.toBlob(r,"image/png")), "adaptive_foreground_432.png");
+});
+
+/* ---------- init ---------- */
+afterChange();
+</script>
+</body>
+</html>
