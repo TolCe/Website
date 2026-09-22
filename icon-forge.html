@@ -214,6 +214,9 @@ hr.sep{border:0;border-top:1px solid var(--line);margin:2px 0}
             <div class="sliderrow"><input type="range" id="fgY" min="-20" max="20" step="1" value="0"><span class="val" id="fgYV">0</span></div>
           </label>
         </div>
+        <label class="check"><input type="checkbox" id="fgDraw" checked>
+          <span>Draw the artwork on this layer
+            <span class="hint">Switch off when the background already carries the whole image. The sliders still size the monochrome and notification icons.</span></span></label>
         <div class="note">Android crops the outer ring of the 108&nbsp;dp layer. Keep artwork at or under <strong>61%</strong> and nothing can be clipped by any launcher mask.</div>
       </div>
     </section>
@@ -226,6 +229,7 @@ hr.sep{border:0;border-top:1px solid var(--line);margin:2px 0}
             <option value="solid" selected>Solid colour</option>
             <option value="gradient">Linear gradient</option>
             <option value="image">Separate image</option>
+            <option value="source">The icon itself, cropped to fill</option>
           </select>
         </label>
         <div class="row" id="bgSolidRow">
@@ -268,6 +272,24 @@ hr.sep{border:0;border-top:1px solid var(--line);margin:2px 0}
           <label class="field"><span class="lbl">Zoom</span>
             <div class="sliderrow"><input type="range" id="bgImgZoom" min="100" max="200" step="1" value="100"><span class="val" id="bgImgZoomV">100%</span></div>
           </label>
+        </div>
+        <div id="bgSourceRows" hidden class="stack">
+          <label class="field"><span class="lbl">Crop scale</span>
+            <div class="sliderrow"><input type="range" id="bgSrcZoom" min="60" max="200" step="1" value="100"><span class="val" id="bgSrcZoomV">100%</span></div>
+          </label>
+          <div class="row">
+            <label class="field grow"><span class="lbl">Crop X</span>
+              <div class="sliderrow"><input type="range" id="bgSrcX" min="-30" max="30" step="1" value="0"><span class="val" id="bgSrcXV">0</span></div>
+            </label>
+            <label class="field grow"><span class="lbl">Crop Y</span>
+              <div class="sliderrow"><input type="range" id="bgSrcY" min="-30" max="30" step="1" value="0"><span class="val" id="bgSrcYV">0</span></div>
+            </label>
+          </div>
+          <div class="row wrapy" id="cropPresets">
+            <button class="btn tiny" type="button" data-crop="100">Fill the layer</button>
+            <button class="btn tiny" type="button" data-crop="67">Fit inside the mask</button>
+          </div>
+          <div class="note">Your image becomes the background and every launcher mask cuts it to shape. At <strong>100%</strong> it covers the whole 108&nbsp;dp layer, so the outer ring is cropped off. At <strong>67%</strong> the entire image lands inside the 72&nbsp;dp window and the colour above only pads the ring.</div>
         </div>
       </div>
     </section>
@@ -395,7 +417,8 @@ const st = {
   src:null, srcFull:null, bgImg:null, monoImg:null,
   avg:"#1b2430", edge:"#1b2430", palette:[], pickTarget:"c1",
   bgMode:"solid", c1:"#1b2430", c2:"#3ddc84", angle:135, bgZoom:100,
-  fgScale:61, fgX:0, fgY:0, trim:true,
+  srcZoom:100, srcX:0, srcY:0,
+  fgScale:61, fgX:0, fgY:0, trim:true, fgOn:true,
   monoMode:"alpha", monoThresh:50,
   lgScale:92, lgRadius:20, lgAuto:true,
   guides:true, themeIdx:0
@@ -525,8 +548,20 @@ function shade(hex, amount){
 }
 
 /* ---------- layer painters ---------- */
+/* The artwork itself, cover-cropped to fill the layer: nothing is invented behind it,
+   the launcher mask does the cutting. Whatever the crop leaves bare takes the flat colour. */
+function paintSourceFill(cx,W,H){
+  cx.fillStyle = st.c1; cx.fillRect(0,0,W,H);
+  const src = st.src;
+  if (!src) return;
+  const k = Math.max(W/src.width, H/src.height) * (st.srcZoom/100);
+  const w = src.width*k, h = src.height*k;
+  cx.drawImage(src, (W-w)/2 + st.srcX/100*W, (H-h)/2 + st.srcY/100*H, w, h);
+}
+
 function paintBackground(cx,S){
   cx.clearRect(0,0,S,S);
+  if (st.bgMode === "source"){ paintSourceFill(cx,S,S); return; }
   if (st.bgMode === "image" && st.bgImg){
     cx.fillStyle = st.c1; cx.fillRect(0,0,S,S);
     coverDraw(cx, st.bgImg, S, S, st.bgZoom/100);
@@ -560,6 +595,7 @@ function paintArt(cx, S, scalePct, src){
 
 function paintForeground(cx,S){
   cx.clearRect(0,0,S,S);
+  if (!st.fgOn) return;
   paintArt(cx, S, st.fgScale, st.src);
 }
 
@@ -604,7 +640,7 @@ function paintFlat(cx, S, shape){
   cx.clearRect(0,0,S,S);
   const tmp = mkCanvas(S,S), tc = ctxOf(tmp);
   paintBackground(tc,S);
-  paintArt(tc, S, st.lgScale, st.src);
+  if (st.fgOn) paintArt(tc, S, st.lgScale, st.src);
   cx.save();
   if (shape === "round"){ cx.beginPath(); cx.arc(S/2,S/2,S/2,0,Math.PI*2); cx.clip(); }
   else if (shape === "legacy"){ roundRectPath(cx,0,0,S,S,S*st.lgRadius/100); cx.clip(); }
@@ -614,13 +650,14 @@ function paintFlat(cx, S, shape){
 
 function paintBanner(cx,W,H){
   cx.clearRect(0,0,W,H);
-  if (st.bgMode === "image" && st.bgImg){ cx.fillStyle = st.c1; cx.fillRect(0,0,W,H); coverDraw(cx, st.bgImg, W, H, st.bgZoom/100); }
+  if (st.bgMode === "source"){ paintSourceFill(cx,W,H); }
+  else if (st.bgMode === "image" && st.bgImg){ cx.fillStyle = st.c1; cx.fillRect(0,0,W,H); coverDraw(cx, st.bgImg, W, H, st.bgZoom/100); }
   else if (st.bgMode === "gradient"){
     const g = cx.createLinearGradient(0,0,W,H);
     g.addColorStop(0, st.c1); g.addColorStop(1, st.c2);
     cx.fillStyle = g; cx.fillRect(0,0,W,H);
   } else { cx.fillStyle = st.c1; cx.fillRect(0,0,W,H); }
-  if (st.src){
+  if (st.src && st.fgOn){
     const box = H*0.68;
     const k = Math.min(box/st.src.width, box/st.src.height);
     const w = st.src.width*k, h = st.src.height*k;
@@ -656,7 +693,7 @@ function paintMaskPreview(canvas){
   cx.clearRect(0,0,V,V);
   cx.drawImage(tmp, -off, -off);
 }
-function paintForeground2(cx,S){ paintArt(cx, S, st.fgScale, st.src); }
+function paintForeground2(cx,S){ if (st.fgOn) paintArt(cx, S, st.fgScale, st.src); }
 
 function drawGuides(cx,S){
   if (!st.guides) return;
@@ -941,7 +978,10 @@ function readmeText(){
     "",
     "NOTES",
     "-----",
-    "- Artwork size used: " + st.fgScale + "% of the 108dp adaptive canvas (61% or less is always safe).",
+    st.bgMode === "source"
+      ? "- The source image was cropped to fill the background layer at " + st.srcZoom + "% scale; the foreground layer is " +
+        (st.fgOn ? "drawn at " + st.fgScale + "%." : "intentionally empty.")
+      : "- Artwork size used: " + st.fgScale + "% of the 108dp adaptive canvas (61% or less is always safe).",
     "- Android crops the outer 18dp ring of the adaptive layers, so the background must be full-bleed.",
     "- The monochrome layer is white on transparency; Android recolours it from the user's wallpaper.",
     "- The Play Store icon must not be uploaded as a build asset. Attach it in the Play Console listing.",
@@ -1011,7 +1051,7 @@ function syncLegacyAuto(){
   }
 }
 function afterChange(){
-  $("safeWarn").hidden = st.fgScale <= 61;
+  $("safeWarn").hidden = !st.fgOn || st.fgScale <= 61;
   syncLegacyAuto();
   buildTable();
   renderAll();
@@ -1022,16 +1062,27 @@ bindSlider("fgX","fgX", v => String(v));
 bindSlider("fgY","fgY", v => String(v));
 bindSlider("bgAngle","angle", v => v + "°");
 bindSlider("bgImgZoom","bgZoom", v => v + "%");
+bindSlider("bgSrcZoom","srcZoom", v => v + "%");
+bindSlider("bgSrcX","srcX", v => String(v));
+bindSlider("bgSrcY","srcY", v => String(v));
 bindSlider("monoThresh","monoThresh", v => v + "%");
 bindSlider("lgScale","lgScale", v => v + "%");
 bindSlider("lgRadius","lgRadius", v => v + "%");
 
+function setFgOn(on){ st.fgOn = on; $("fgDraw").checked = on; }
+
 $("bgMode").addEventListener("change", e => {
+  const prev = st.bgMode;
   st.bgMode = e.target.value;
   $("bgGradRows").hidden = st.bgMode !== "gradient";
   $("bgImgRows").hidden  = st.bgMode !== "image";
+  $("bgSourceRows").hidden = st.bgMode !== "source";
   $("pickTargetRow").hidden = st.bgMode !== "gradient";
   if (st.bgMode !== "gradient") st.pickTarget = "c1";
+  /* A full-bleed crop already shows the artwork, so drawing it again on the foreground
+     would double it up. Park that layer, and hand it back on the way out. */
+  if (st.bgMode === "source" && prev !== "source") setFgOn(false);
+  if (st.bgMode !== "source" && prev === "source") setFgOn(true);
   markActiveChip();
   afterChange();
 });
@@ -1089,6 +1140,14 @@ function buildChips(){
   ).join("");
   markActiveChip();
 }
+$("cropPresets").addEventListener("click", e => {
+  const b = e.target.closest("button[data-crop]");
+  if (!b) return;
+  const el = $("bgSrcZoom");
+  el.value = b.dataset.crop;
+  el.dispatchEvent(new Event("input"));
+});
+
 $("paletteChips").addEventListener("click", e => {
   const b = e.target.closest(".chip");
   if (b) setColor(activeTarget(), b.dataset.hex);
@@ -1152,9 +1211,10 @@ if (window.EyeDropper){
   });
 }
 
-["lgAuto","exRound","exLegacy","exStore","exTv","exNotif","exScript","showGuides","trim"].forEach(id => {
+["lgAuto","fgDraw","exRound","exLegacy","exStore","exTv","exNotif","exScript","showGuides","trim"].forEach(id => {
   $(id).addEventListener("change", async () => {
     if (id === "lgAuto") st.lgAuto = $(id).checked;
+    if (id === "fgDraw") st.fgOn = $(id).checked;
     if (id === "showGuides") st.guides = $(id).checked;
     if (id === "trim"){
       st.trim = $(id).checked;
