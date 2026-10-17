@@ -1,205 +1,374 @@
 <!DOCTYPE html>
-<html lang="en-US">
-
+<html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Tolga Cebeci</title>
-	<meta name="description" content="Welcome to my page!">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
-
-	<meta name="facebook-domain-verification" content="js1cnerb4lcqy3l5tyos16der3ur03" />
-
-	<!-- STYLESHEETS -->
-	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all">
-	<link rel="stylesheet" href="css/all.min.css" type="text/css" media="all">
-	<link rel="stylesheet" href="css/animate.css" type="text/css" media="all">
-	<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Revolave · Tolga Cebeci</title>
+  <meta name="description" content="Revolave is the indie mobile game studio of Tolga Cebeci: 17 live games across strategy, simulation, casual and puzzle on Google Play.">
+  <meta name="facebook-domain-verification" content="js1cnerb4lcqy3l5tyos16der3ur03" />
+  <meta property="og:title" content="Revolave · Instant Fun, Infinite Dreams">
+  <meta property="og:description" content="17 live mobile games by Tolga Cebeci.">
+  <meta property="og:image" content="images/games/colonycoredefence-icon.webp">
+  <meta name="theme-color" content="#0D1120">
+  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/all.min.css">
+  <link rel="stylesheet" href="css/revolave.css">
 </head>
-
 <body>
-	<!-- Preloader -->
-	<div id="preloader" class="dark">
-		<div class="outer">
-			<!-- Google Chrome -->
-			<div class="infinityChrome">
-				<div></div>
-				<div></div>
-				<div></div>
-			</div>
+  <div class="progress" aria-hidden="true"><span></span></div>
 
-			<!-- Safari and others -->
-			<div class="infinity">
-				<div>
-					<span></span>
-				</div>
-				<div>
-					<span></span>
-				</div>
-				<div>
-					<span></span>
-				</div>
-			</div>
-			<!-- Stuff -->
-			<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="goo-outer">
-				<defs>
-					<filter id="goo">
-						<fegaussianblur in="SourceGraphic" stdDeviation="6" result="blur" />
-						<fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-						<feblend in="SourceGraphic" in2="goo" />
-					</filter>
-				</defs>
-			</svg>
-		</div>
-	</div>
+  <header class="nav">
+    <a class="brand" href="#top">REVOLAVE</a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    <nav class="nav-links">
+      <a href="#games">Games</a>
+      <a href="#studio">Studio</a>
+      <a href="#contact">Contact</a>
+      <a href="icon-forge.html">Icon Forge</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </header>
 
-	<header class="desktop-header-3 dark fixed-top">
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-cloud"><a class="hicon" href="#game-colony" style="--i:0;--s:0.1" aria-label="Colony: Core Defence"><img src="images/games/colonycoredefence-icon.webp" alt="" width="160" height="160"></a><a class="hicon" href="#game-caravan" style="--i:1;--s:0.22" aria-label="Caravan Business"><img src="images/games/caravanbusiness-icon.webp" alt="" width="160" height="160"></a><a class="hicon" href="#game-foto" style="--i:2;--s:0.15" aria-label="Foto Fishing: Odyssey"><img src="images/games/fotofishingodyssey-icon.webp" alt="" width="160" height="160"></a><a class="hicon" href="#game-match" style="--i:3;--s:0.28" aria-label="Match Flow"><img src="images/games/matchflow-icon.webp" alt="" width="160" height="160"></a><a class="hicon" href="#game-mall" style="--i:4;--s:0.12" aria-label="Mall Security"><img src="images/games/mallsecurity-icon.webp" alt="" width="160" height="160"></a><a class="hicon" href="#games" style="--i:5;--s:0.25" aria-label="Space Business"><img src="images/games/spacebusiness-icon.webp" alt="" width="160" height="160"></a><a class="hicon" href="#games" style="--i:6;--s:0.18" aria-label="Medieval Business"><img src="images/games/medievalbusiness-icon.webp" alt="" width="160" height="160"></a><a class="hicon" href="#games" style="--i:7;--s:0.08" aria-label="Block Art"><img src="images/games/blockart-icon.webp" alt="" width="160" height="160"></a><a class="hicon" href="#games" style="--i:8;--s:0.3" aria-label="Rain On&#x27;Em"><img src="images/games/rainonem-icon.webp" alt="" width="160" height="160"></a><a class="hicon" href="#games" style="--i:9;--s:0.2" aria-label="Medieval Hero"><img src="images/games/medievalhero-icon.webp" alt="" width="160" height="160"></a><a class="hicon" href="#games" style="--i:10;--s:0.1" aria-label="We Got No Brakes"><img src="images/games/wegotnobrakes-icon.webp" alt="" width="160" height="160"></a><a class="hicon" href="#games" style="--i:11;--s:0.22" aria-label="Block Escape 2048"><img src="images/games/blockescape-icon.webp" alt="" width="160" height="160"></a></div>
+      <div class="hero-text">
+        <div class="eyebrow">Indie mobile game studio</div>
+        <h1>REVOLAVE</h1>
+        <p class="tagline">Instant Fun, Infinite Dreams</p>
+        <p class="by">by Tolga Cebeci · Founder &amp; Developer</p>
+        <div class="hero-cta">
+          <a class="btn primary" href="#games">Explore the games</a>
+          <a class="btn ghost" href="https://play.google.com/store/apps/dev?id=7603877924688081724" target="_blank" rel="noopener"><i class="fab fa-google-play"></i> Google Play</a>
+        </div>
+        <ul class="socials">
+          <li><a href="https://www.linkedin.com/in/tolgacebeci/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a></li>
+          <li><a href="https://www.github.com/tolce/" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a></li>
+        </ul>
+      </div>
+      <a class="scroll-hint" href="#studio" aria-label="Scroll down"><span></span></a>
+    </section>
 
-		<div class="container">
+    <!-- STUDIO -->
+    <section class="section" id="studio">
+      <div class="wrap">
+        <div class="eyebrow reveal">The studio</div>
+        <h2 class="reveal">An indie studio shipping fast, and going deeper with every release.</h2>
+        <div class="stats">
+          <div class="stat reveal" style="--d:0"><b data-count="17">17</b><span>live titles on Google Play</span></div>
+          <div class="stat reveal" style="--d:1"><b data-count="5">5</b><span>genres: strategy, simulation, casual, puzzle, arcade</span></div>
+          <div class="stat reveal" style="--d:2"><b data-count="100" data-suffix="+">100+</b><span>levels in Colony: Core Defence</span></div>
+          <div class="stat reveal" style="--d:3"><b data-count="5">5</b><span>languages in Foto Fishing: Odyssey</span></div>
+        </div>
+        <div class="pillars">
+          <div class="reveal" style="--d:0"><i class="fas fa-cubes"></i><h4>Built in Unity</h4><p>Every title is developed in Unity and shipped with a fast, repeatable release cadence.</p></div>
+          <div class="reveal" style="--d:1"><i class="fas fa-magic"></i><h4>AI-assisted pipeline</h4><p>AI tools across production, from code to 3D models and 2D art, keep content output high.</p></div>
+          <div class="reveal" style="--d:2"><i class="fas fa-chart-line"></i><h4>LiveOps mindset</h4><p>Experience running LiveOps on live mobile titles: passes, daily rewards, events, economy tuning.</p></div>
+        </div>
+      </div>
+    </section>
 
-			<nav class="navbar navbar-expand-lg navbar-dark">
-				<a class="navbar-brand" href="#home"><img src="fonts/logo-light.svg" alt="Revolave"
-						style="width:250px;height:60px;"></a> <button aria-controls="navbarNavDropdown"
-					aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
-					data-target="#navbarNavDropdown" data-toggle="collapse" type="button"><span
-						class="navbar-toggler-icon"></span></button>
-				<div class="collapse navbar-collapse" id="navbarNavDropdown">
-					<ul class="navbar-nav ml-auto scrollspy">
-						<li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
-						<li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-						<li class="nav-item"><a href="icon-forge.html" class="nav-link">Icon Forge</a></li>
-						<li class="nav-item"><a href="privacy.html" class="nav-link">Privacy</a></li>
-					</ul>
-				</div>
-			</nav>
+    <!-- PORTFOLIO -->
+    <section class="section" id="games">
+      <div class="wrap">
+        <div class="eyebrow reveal">Portfolio</div>
+        <h2 class="reveal">Seventeen games across five genres</h2>
+        <div class="pgrid">
+      <a class="pcard reveal" href="#game-colony"  style="--c1:#2B5BFF;--c2:#7A3CFF;--d:0">
+        <img src="images/games/colonycoredefence-icon.webp" alt="Colony: Core Defence icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Strategy</span><h3>Colony: Core Defence</h3><p>Merge pods, charge the Tesla Core, hold the line against an alien swarm.</p></div>
+      </a>
+      <a class="pcard reveal" href="#game-caravan"  style="--c1:#C9781E;--c2:#7A3B12;--d:1">
+        <img src="images/games/caravanbusiness-icon.webp" alt="Caravan Business icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Strategy</span><h3>Caravan Business</h3><p>Buy low, sell high and guard your caravan in turn-based hex battles.</p></div>
+      </a>
+      <a class="pcard reveal" href="#game-foto"  style="--c1:#00A6B8;--c2:#0B4F8A;--d:0">
+        <img src="images/games/fotofishingodyssey-icon.webp" alt="Foto Fishing: Odyssey icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Casual</span><h3>Foto Fishing: Odyssey</h3><p>Dive into 9 ocean regions and photograph 58 sea creatures for your field guide.</p></div>
+      </a>
+      <a class="pcard reveal" href="#game-match"  style="--c1:#2D6BFF;--c2:#1B2A8A;--d:1">
+        <img src="images/games/matchflow-icon.webp" alt="Match Flow icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Puzzle</span><h3>Match Flow</h3><p>Two puzzles, one screen: match-3 below, pixel art to break apart above.</p></div>
+      </a>
+      <a class="pcard reveal" href="#game-mall"  style="--c1:#1E9BE8;--c2:#0B4C8C;--d:0">
+        <img src="images/games/mallsecurity-icon.webp" alt="Mall Security icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Casual</span><h3>Mall Security</h3><p>Every level is a different job for the mall&#x27;s security guard.</p></div>
+      </a>
+      <a class="pcard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.spacebusiness" target="_blank" rel="noopener" style="--c1:#3D2C8D;--c2:#140F3A;--d:1">
+        <img src="images/games/spacebusiness-icon.webp" alt="Space Business icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Simulation</span><h3>Space Business</h3><p>Build a space trading company: planets, factories, embassies and routes.</p></div>
+      </a>
+      <a class="pcard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.medievalbusiness" target="_blank" rel="noopener" style="--c1:#C08A2E;--c2:#5A3A12;--d:0">
+        <img src="images/games/medievalbusiness-icon.webp" alt="Medieval Business icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Simulation</span><h3>Medieval Business</h3><p>Click, trade low-high, buy businesses, hire managers.</p></div>
+      </a>
+      <a class="pcard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.blockart" target="_blank" rel="noopener" style="--c1:#8E3BD9;--c2:#4A1680;--d:1">
+        <img src="images/games/blockart-icon.webp" alt="Block Art icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Puzzle</span><h3>Block Art</h3><p>Drag block pieces onto the board to reveal hidden pixel-art pictures.</p></div>
+      </a>
+      <a class="pcard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.blockescape" target="_blank" rel="noopener" style="--c1:#2FA8F0;--c2:#155A9E;--d:0">
+        <img src="images/games/blockescape-icon.webp" alt="Block Escape 2048 icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Puzzle</span><h3>Block Escape 2048</h3><p>Merge the blocks, clear the scene, with a limited number of moves.</p></div>
+      </a>
+      <a class="pcard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.tap2048" target="_blank" rel="noopener" style="--c1:#E0A81E;--c2:#8A5A0A;--d:1">
+        <img src="images/games/tap2048-icon.webp" alt="Tap 2048 Puzzle icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Arcade</span><h3>Tap 2048 Puzzle</h3><p>Merge cubes of the same value until only one remains.</p></div>
+      </a>
+      <a class="pcard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.rainonem" target="_blank" rel="noopener" style="--c1:#2C8BE8;--c2:#0F4C91;--d:0">
+        <img src="images/games/rainonem-icon.webp" alt="Rain On&#x27;Em icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Arcade</span><h3>Rain On&#x27;Em</h3><p>Fly a UAV, draw your aim over the targets and let the missiles do the work.</p></div>
+      </a>
+      <a class="pcard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.medievalhero" target="_blank" rel="noopener" style="--c1:#5E9E3A;--c2:#2E5A1C;--d:1">
+        <img src="images/games/medievalhero-icon.webp" alt="Medieval Hero icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Arcade</span><h3>Medieval Hero</h3><p>Take up bow and arrows, defeat the attackers and save the town&#x27;s people.</p></div>
+      </a>
+      <a class="pcard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.wegotnobrakes" target="_blank" rel="noopener" style="--c1:#E8306B;--c2:#8A1238;--d:0">
+        <img src="images/games/wegotnobrakes-icon.webp" alt="We Got No Brakes icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Arcade</span><h3>We Got No Brakes</h3><p>Switch between your car&#x27;s three abilities to beat every obstacle on the road.</p></div>
+      </a>
+      <a class="pcard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.cakesort" target="_blank" rel="noopener" style="--c1:#F2632B;--c2:#A3300F;--d:1">
+        <img src="images/games/cakesort-icon.webp" alt="Cake Sort icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Arcade</span><h3>Cake Sort</h3><p>Rotate plates and move slices between them to serve full six-slice cakes.</p></div>
+      </a>
+      <a class="pcard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.rotator2048" target="_blank" rel="noopener" style="--c1:#2DB34A;--c2:#14662A;--d:0">
+        <img src="images/games/rotator2048-icon.webp" alt="Rotator 2048 icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Puzzle</span><h3>Rotator 2048</h3><p>Roll a numbered cube to the exit so the matching face lands on top.</p></div>
+      </a>
+      <a class="pcard reveal" href="https://play.google.com/store/apps/details?id=com.flyingmeymun.clashtown" target="_blank" rel="noopener" style="--c1:#F2A11F;--c2:#8A5208;--d:1">
+        <img src="images/games/clashtown-icon.webp" alt="Clash Town icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Arcade</span><h3>Clash Town</h3><p>Brawl through town, eliminate your rivals and be the sole survivor.</p></div>
+      </a>
+      <a class="pcard reveal" href="https://play.google.com/store/apps/details?id=com.ticstudio.gaplessthrow" target="_blank" rel="noopener" style="--c1:#4A63D9;--c2:#24307A;--d:0">
+        <img src="images/games/gaplessthrow-icon.webp" alt="Gapless Throw icon" width="96" height="96" loading="lazy">
+        <div><span class="chip">Arcade</span><h3>Gapless Throw</h3><p>Test your reflexes: throw waves of balls into the matching baskets.</p></div>
+      </a>
+        </div>
+      </div>
+    </section>
 
-		</div>
+    <!-- FEATURED -->
+    <section class="features" aria-label="Featured games">
+    <article class="feature" id="game-colony" style="--c1:#2B5BFF;--c2:#7A3CFF">
+      <div class="feature-art"><span class="label">Newest release</span><div class="phones"><img class="p1" src="images/games/colonycoredefence-shot02.webp" alt="" loading="lazy"><img class="p2" src="images/games/colonycoredefence-shot03.webp" alt="" loading="lazy"><img class="p0" src="images/games/colonycoredefence-shot01.webp" alt="Colony: Core Defence screenshot" loading="lazy"></div></div>
+      <div class="feature-body">
+        <div class="titlerow reveal"><img class="ticon" src="images/games/colonycoredefence-icon.webp" alt="Colony: Core Defence icon" width="120" height="120" loading="lazy">
+          <div><span class="chip">Strategy</span><h3>Colony: Core Defence</h3></div></div>
+        <p class="lead reveal">Merge pods, charge the Tesla Core, hold the line against an alien swarm.</p>
+        <p class="reveal">Merge-defence with roguelike runs. Pods placed around a central Tesla Core are charged by rotating emitters, then auto-deploy units into battle. Merge identical pods to level up; max-level pods unlock a giant Prime unit.</p>
+        <ul class="feats reveal"><li>27 units across 6 rarities, 8 Tesla emitters</li><li>60+ alien enemies &amp; bosses, 10 worlds, 100+ levels</li><li>Roguelike card picks between waves; in-run level-up perks</li><li>Link Patterns: merges buff neighbouring pods</li><li>Meta: unit-card upgrades, relics, modules, Endless mode</li></ul>
+        <div class="meta reveal">
+          <div><span>Monetisation</span><b>Free · Ads + IAP</b></div>
+          <div><span>Retention hooks</span><b>Colony Pass · daily rewards · Endless mode</b></div>
+          <div><span>Last update</span><b>Oct 15, 2026</b></div>
+        </div>
+        <div class="reveal"><a class="store-btn" href="https://play.google.com/store/apps/details?id=com.revolave.colonycoredefence" target="_blank" rel="noopener"><i class="fab fa-google-play"></i><span>Get it on Google Play</span></a></div>
+      </div>
+    </article>
+    <article class="feature flip" id="game-caravan" style="--c1:#C9781E;--c2:#7A3B12">
+      <div class="feature-art"><span class="label">Flagship strategy</span><div class="phones"><img class="p1" src="images/games/caravanbusiness-shot03.webp" alt="" loading="lazy"><img class="p2" src="images/games/caravanbusiness-shot02.webp" alt="" loading="lazy"><img class="p0" src="images/games/caravanbusiness-shot01.webp" alt="Caravan Business screenshot" loading="lazy"></div></div>
+      <div class="feature-body">
+        <div class="titlerow reveal"><img class="ticon" src="images/games/caravanbusiness-icon.webp" alt="Caravan Business icon" width="120" height="120" loading="lazy">
+          <div><span class="chip">Strategy</span><h3>Caravan Business</h3></div></div>
+        <p class="lead reveal">Buy low, sell high and guard your caravan in turn-based hex battles.</p>
+        <p class="reveal">A trading sim fused with tactical combat. Load wagons, pick routes and trade across the realm of Fartherhost, where prices shift daily and react to your own trades. Bandits and wolves are fought in turn-based hex battles.</p>
+        <ul class="feats reveal"><li>Dynamic, player-reactive market economy</li><li>Build a caravan from many animals &amp; mercenary types</li><li>Manage food, wages and morale on the road</li><li>5 factions with their own laws and rivals</li><li>Gossip &amp; informants, banking, smuggling, smithy crafting from loot</li></ul>
+        <div class="meta reveal">
+          <div><span>Monetisation</span><b>Free · Ads + IAP</b></div>
+          <div><span>Retention hooks</span><b>Achievements · random road events</b></div>
+          <div><span>Last update</span><b>Oct 6, 2026</b></div>
+        </div>
+        <div class="reveal"><a class="store-btn" href="https://play.google.com/store/apps/details?id=com.revolave.caravanbusiness" target="_blank" rel="noopener"><i class="fab fa-google-play"></i><span>Get it on Google Play</span></a></div>
+      </div>
+    </article>
+    <article class="feature" id="game-foto" style="--c1:#00A6B8;--c2:#0B4F8A">
+      <div class="feature-art"><span class="label">Original concept</span><div class="land"><img class="l1" src="images/games/fotofishingodyssey-shot04.webp" alt="" loading="lazy"><img class="l2" src="images/games/fotofishingodyssey-shot02.webp" alt="" loading="lazy"><img class="l0" src="images/games/fotofishingodyssey-shot01.webp" alt="Foto Fishing: Odyssey screenshot" loading="lazy"></div></div>
+      <div class="feature-body">
+        <div class="titlerow reveal"><img class="ticon" src="images/games/fotofishingodyssey-icon.webp" alt="Foto Fishing: Odyssey icon" width="120" height="120" loading="lazy">
+          <div><span class="chip">Casual</span><h3>Foto Fishing: Odyssey</h3></div></div>
+        <p class="lead reveal">Dive into 9 ocean regions and photograph 58 sea creatures for your field guide.</p>
+        <p class="reveal">A fishing game where the catch is a photo. Players explore reefs, kelp forests, night waters, ice shelves and the Abyssal Trench, and every shot is scored on framing, focus and fish behaviour.</p>
+        <ul class="feats reveal"><li>9 regions, 45 dive sites, each with a mission &amp; 3-star rating</li><li>58-species field guide to complete</li><li>Upgrade 5 cameras, baits and strobe gear</li><li>Gold + research-point dual progression</li><li>Localised: English, Turkish, German, Spanish, French</li></ul>
+        <div class="meta reveal">
+          <div><span>Monetisation</span><b>Free · Ads + IAP</b></div>
+          <div><span>Retention hooks</span><b>Collection-driven progression</b></div>
+          <div><span>Last update</span><b>Oct 2, 2026</b></div>
+        </div>
+        <div class="reveal"><a class="store-btn" href="https://play.google.com/store/apps/details?id=com.revolave.fotofishingodyssey" target="_blank" rel="noopener"><i class="fab fa-google-play"></i><span>Get it on Google Play</span></a></div>
+      </div>
+    </article>
+    <article class="feature flip" id="game-match" style="--c1:#2D6BFF;--c2:#1B2A8A">
+      <div class="feature-art"><span class="label">Hybrid puzzle</span><div class="phones"><img class="p1" src="images/games/matchflow-shot02.webp" alt="" loading="lazy"><img class="p2" src="images/games/matchflow-shot03.webp" alt="" loading="lazy"><img class="p0" src="images/games/matchflow-shot01.webp" alt="Match Flow screenshot" loading="lazy"></div></div>
+      <div class="feature-body">
+        <div class="titlerow reveal"><img class="ticon" src="images/games/matchflow-icon.webp" alt="Match Flow icon" width="120" height="120" loading="lazy">
+          <div><span class="chip">Puzzle</span><h3>Match Flow</h3></div></div>
+        <p class="lead reveal">Two puzzles, one screen: match-3 below, pixel art to break apart above.</p>
+        <p class="reveal">Matches on the bottom match-3 board send colours up a conveyor that blasts same-coloured blocks out of a pixel-art picture. Every swap costs a move, so each level is a planning puzzle.</p>
+        <ul class="feats reveal"><li>Rocket (4 in a row) and 3×3 bomb (5 / L / T) power-ups</li><li>Chainable power-up combos</li><li>90+ hand-crafted pixel-art levels</li><li>Move-limited levels for tight difficulty tuning</li><li>Auto-save progress</li></ul>
+        <div class="meta reveal">
+          <div><span>Monetisation</span><b>Free · Ads + IAP</b></div>
+          <div><span>Retention hooks</span><b>Level-pack content cadence</b></div>
+          <div><span>Last update</span><b>Aug 24, 2026</b></div>
+        </div>
+        <div class="reveal"><a class="store-btn" href="https://play.google.com/store/apps/details?id=com.revolave.matchflow" target="_blank" rel="noopener"><i class="fab fa-google-play"></i><span>Get it on Google Play</span></a></div>
+      </div>
+    </article>
+    <article class="feature" id="game-mall" style="--c1:#1E9BE8;--c2:#0B4C8C">
+      <div class="feature-art"><span class="label">Mini-game variety</span><div class="phones"><img class="p1" src="images/games/mallsecurity-shot02.webp" alt="" loading="lazy"><img class="p2" src="images/games/mallsecurity-shot03.webp" alt="" loading="lazy"><img class="p0" src="images/games/mallsecurity-shot01.webp" alt="Mall Security screenshot" loading="lazy"></div></div>
+      <div class="feature-body">
+        <div class="titlerow reveal"><img class="ticon" src="images/games/mallsecurity-icon.webp" alt="Mall Security icon" width="120" height="120" loading="lazy">
+          <div><span class="chip">Casual</span><h3>Mall Security</h3></div></div>
+        <p class="lead reveal">Every level is a different job for the mall&#x27;s security guard.</p>
+        <p class="reveal">A collection of quick, one-hand mini-missions built around a single fantasy: keeping the mall safe. Variety per level keeps sessions fresh while a shared progression ties them together.</p>
+        <ul class="feats reveal"><li>Scan bags for smugglers, compare bags to receipts</li><li>Watch CCTV to catch thieves, chase runners</li><li>Patrol parking, inspect food stands, run gate checks</li><li>Pursue getaway cars; back a truck into the dock</li><li>Unlock higher-rank guards &amp; police cars; XP, coins, gems</li></ul>
+        <div class="meta reveal">
+          <div><span>Monetisation</span><b>Free · Ads + IAP</b></div>
+          <div><span>Retention hooks</span><b>Rank &amp; garage collection</b></div>
+          <div><span>Last update</span><b>Jul 21, 2026</b></div>
+        </div>
+        <div class="reveal"><a class="store-btn" href="https://play.google.com/store/apps/details?id=com.revolave.mallsecurity" target="_blank" rel="noopener"><i class="fab fa-google-play"></i><span>Get it on Google Play</span></a></div>
+      </div>
+    </article>
+    </section>
 
-	</header>
+    <!-- REEL -->
+    <section class="reel" aria-label="Screenshots">
+      <div class="reel-sticky">
+        <div class="wrap reel-head"><div class="eyebrow">In the games</div><h2>Scroll through the catalogue</h2></div>
+        <div class="reel-track"><figure style="--c1:#2B5BFF"><img src="images/games/colonycoredefence-shot01.webp" alt="Colony: Core Defence screenshot" loading="lazy"><figcaption>Colony: Core Defence</figcaption></figure><figure style="--c1:#2B5BFF"><img src="images/games/colonycoredefence-shot02.webp" alt="Colony: Core Defence screenshot" loading="lazy"><figcaption>Colony: Core Defence</figcaption></figure><figure style="--c1:#2B5BFF"><img src="images/games/colonycoredefence-shot03.webp" alt="Colony: Core Defence screenshot" loading="lazy"><figcaption>Colony: Core Defence</figcaption></figure><figure style="--c1:#C9781E"><img src="images/games/caravanbusiness-shot01.webp" alt="Caravan Business screenshot" loading="lazy"><figcaption>Caravan Business</figcaption></figure><figure style="--c1:#C9781E"><img src="images/games/caravanbusiness-shot02.webp" alt="Caravan Business screenshot" loading="lazy"><figcaption>Caravan Business</figcaption></figure><figure style="--c1:#C9781E"><img src="images/games/caravanbusiness-shot03.webp" alt="Caravan Business screenshot" loading="lazy"><figcaption>Caravan Business</figcaption></figure><figure style="--c1:#2D6BFF"><img src="images/games/matchflow-shot01.webp" alt="Match Flow screenshot" loading="lazy"><figcaption>Match Flow</figcaption></figure><figure style="--c1:#2D6BFF"><img src="images/games/matchflow-shot02.webp" alt="Match Flow screenshot" loading="lazy"><figcaption>Match Flow</figcaption></figure><figure style="--c1:#2D6BFF"><img src="images/games/matchflow-shot03.webp" alt="Match Flow screenshot" loading="lazy"><figcaption>Match Flow</figcaption></figure><figure style="--c1:#1E9BE8"><img src="images/games/mallsecurity-shot01.webp" alt="Mall Security screenshot" loading="lazy"><figcaption>Mall Security</figcaption></figure><figure style="--c1:#1E9BE8"><img src="images/games/mallsecurity-shot02.webp" alt="Mall Security screenshot" loading="lazy"><figcaption>Mall Security</figcaption></figure><figure style="--c1:#1E9BE8"><img src="images/games/mallsecurity-shot03.webp" alt="Mall Security screenshot" loading="lazy"><figcaption>Mall Security</figcaption></figure><figure style="--c1:#3D2C8D"><img src="images/games/spacebusiness-shot01.webp" alt="Space Business screenshot" loading="lazy"><figcaption>Space Business</figcaption></figure><figure style="--c1:#3D2C8D"><img src="images/games/spacebusiness-shot02.webp" alt="Space Business screenshot" loading="lazy"><figcaption>Space Business</figcaption></figure><figure style="--c1:#3D2C8D"><img src="images/games/spacebusiness-shot03.webp" alt="Space Business screenshot" loading="lazy"><figcaption>Space Business</figcaption></figure><figure style="--c1:#C08A2E"><img src="images/games/medievalbusiness-shot01.webp" alt="Medieval Business screenshot" loading="lazy"><figcaption>Medieval Business</figcaption></figure><figure style="--c1:#C08A2E"><img src="images/games/medievalbusiness-shot02.webp" alt="Medieval Business screenshot" loading="lazy"><figcaption>Medieval Business</figcaption></figure><figure style="--c1:#C08A2E"><img src="images/games/medievalbusiness-shot03.webp" alt="Medieval Business screenshot" loading="lazy"><figcaption>Medieval Business</figcaption></figure><figure style="--c1:#8E3BD9"><img src="images/games/blockart-shot01.webp" alt="Block Art screenshot" loading="lazy"><figcaption>Block Art</figcaption></figure><figure style="--c1:#8E3BD9"><img src="images/games/blockart-shot02.webp" alt="Block Art screenshot" loading="lazy"><figcaption>Block Art</figcaption></figure><figure style="--c1:#8E3BD9"><img src="images/games/blockart-shot03.webp" alt="Block Art screenshot" loading="lazy"><figcaption>Block Art</figcaption></figure><figure style="--c1:#2FA8F0"><img src="images/games/blockescape-shot01.webp" alt="Block Escape 2048 screenshot" loading="lazy"><figcaption>Block Escape 2048</figcaption></figure><figure style="--c1:#2FA8F0"><img src="images/games/blockescape-shot02.webp" alt="Block Escape 2048 screenshot" loading="lazy"><figcaption>Block Escape 2048</figcaption></figure><figure style="--c1:#2FA8F0"><img src="images/games/blockescape-shot03.webp" alt="Block Escape 2048 screenshot" loading="lazy"><figcaption>Block Escape 2048</figcaption></figure><figure style="--c1:#E0A81E"><img src="images/games/tap2048-shot01.webp" alt="Tap 2048 Puzzle screenshot" loading="lazy"><figcaption>Tap 2048 Puzzle</figcaption></figure><figure style="--c1:#E0A81E"><img src="images/games/tap2048-shot02.webp" alt="Tap 2048 Puzzle screenshot" loading="lazy"><figcaption>Tap 2048 Puzzle</figcaption></figure><figure style="--c1:#E0A81E"><img src="images/games/tap2048-shot03.webp" alt="Tap 2048 Puzzle screenshot" loading="lazy"><figcaption>Tap 2048 Puzzle</figcaption></figure><figure style="--c1:#2C8BE8"><img src="images/games/rainonem-shot01.webp" alt="Rain On&#x27;Em screenshot" loading="lazy"><figcaption>Rain On&#x27;Em</figcaption></figure><figure style="--c1:#2C8BE8"><img src="images/games/rainonem-shot02.webp" alt="Rain On&#x27;Em screenshot" loading="lazy"><figcaption>Rain On&#x27;Em</figcaption></figure><figure style="--c1:#5E9E3A"><img src="images/games/medievalhero-shot01.webp" alt="Medieval Hero screenshot" loading="lazy"><figcaption>Medieval Hero</figcaption></figure><figure style="--c1:#5E9E3A"><img src="images/games/medievalhero-shot02.webp" alt="Medieval Hero screenshot" loading="lazy"><figcaption>Medieval Hero</figcaption></figure><figure style="--c1:#E8306B"><img src="images/games/wegotnobrakes-shot01.webp" alt="We Got No Brakes screenshot" loading="lazy"><figcaption>We Got No Brakes</figcaption></figure><figure style="--c1:#E8306B"><img src="images/games/wegotnobrakes-shot02.webp" alt="We Got No Brakes screenshot" loading="lazy"><figcaption>We Got No Brakes</figcaption></figure><figure style="--c1:#F2632B"><img src="images/games/cakesort-shot01.webp" alt="Cake Sort screenshot" loading="lazy"><figcaption>Cake Sort</figcaption></figure><figure style="--c1:#F2632B"><img src="images/games/cakesort-shot02.webp" alt="Cake Sort screenshot" loading="lazy"><figcaption>Cake Sort</figcaption></figure><figure style="--c1:#2DB34A"><img src="images/games/rotator2048-shot01.webp" alt="Rotator 2048 screenshot" loading="lazy"><figcaption>Rotator 2048</figcaption></figure><figure style="--c1:#2DB34A"><img src="images/games/rotator2048-shot02.webp" alt="Rotator 2048 screenshot" loading="lazy"><figcaption>Rotator 2048</figcaption></figure><figure style="--c1:#F2A11F"><img src="images/games/clashtown-shot01.webp" alt="Clash Town screenshot" loading="lazy"><figcaption>Clash Town</figcaption></figure><figure style="--c1:#F2A11F"><img src="images/games/clashtown-shot02.webp" alt="Clash Town screenshot" loading="lazy"><figcaption>Clash Town</figcaption></figure><figure style="--c1:#4A63D9"><img src="images/games/gaplessthrow-shot01.webp" alt="Gapless Throw screenshot" loading="lazy"><figcaption>Gapless Throw</figcaption></figure><figure style="--c1:#4A63D9"><img src="images/games/gaplessthrow-shot02.webp" alt="Gapless Throw screenshot" loading="lazy"><figcaption>Gapless Throw</figcaption></figure></div>
+      </div>
+    </section>
 
-	<main class="content">
+    <!-- MORE -->
+    <section class="section" id="more">
+      <div class="wrap">
+        <div class="eyebrow reveal">More from Revolave</div>
+        <h2 class="reveal">Tycoon sims and quick-session puzzlers</h2>
+        <div class="mgrid">
+      <article class="mcard reveal" style="--c1:#C08A2E;--c2:#5A3A12;--d:0">
+        <div class="mart"><img class="ms a" src="images/games/medievalbusiness-shot01.webp" alt="" loading="lazy"><img class="ms b" src="images/games/medievalbusiness-shot02.webp" alt="" loading="lazy">
+          <img class="mi" src="images/games/medievalbusiness-icon.webp" alt="Medieval Business icon" loading="lazy"></div>
+        <span class="chip">Simulation</span><h3>Medieval Business</h3><p>Clicker economy: trade low, sell high, buy businesses and hire managers. A reputation system rewards honest trades.</p>
+        <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.revolave.medievalbusiness" target="_blank" rel="noopener"><i class="fab fa-google-play"></i><span>Google Play</span></a>
+      </article>
+      <article class="mcard reveal" style="--c1:#3D2C8D;--c2:#140F3A;--d:1">
+        <div class="mart"><img class="ms a" src="images/games/spacebusiness-shot01.webp" alt="" loading="lazy"><img class="ms b" src="images/games/spacebusiness-shot02.webp" alt="" loading="lazy">
+          <img class="mi" src="images/games/spacebusiness-icon.webp" alt="Space Business icon" loading="lazy"></div>
+        <span class="chip">Simulation</span><h3>Space Business</h3><p>Grow an interplanetary company with embassies, factories and trade routes linking a production network.</p>
+        <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.revolave.spacebusiness" target="_blank" rel="noopener"><i class="fab fa-google-play"></i><span>Google Play</span></a>
+      </article>
+      <article class="mcard reveal" style="--c1:#8E3BD9;--c2:#4A1680;--d:2">
+        <div class="mart"><img class="ms a" src="images/games/blockart-shot01.webp" alt="" loading="lazy"><img class="ms b" src="images/games/blockart-shot02.webp" alt="" loading="lazy">
+          <img class="mi" src="images/games/blockart-icon.webp" alt="Block Art icon" loading="lazy"></div>
+        <span class="chip">Puzzle</span><h3>Block Art</h3><p>Drag block pieces onto the board; each correct placement reveals part of a hidden pixel-art picture.</p>
+        <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.revolave.blockart" target="_blank" rel="noopener"><i class="fab fa-google-play"></i><span>Google Play</span></a>
+      </article>
+      <article class="mcard reveal" style="--c1:#2FA8F0;--c2:#155A9E;--d:0">
+        <div class="mart"><img class="ms a" src="images/games/blockescape-shot01.webp" alt="" loading="lazy"><img class="ms b" src="images/games/blockescape-shot02.webp" alt="" loading="lazy">
+          <img class="mi" src="images/games/blockescape-icon.webp" alt="Block Escape 2048 icon" loading="lazy"></div>
+        <span class="chip">Puzzle</span><h3>Block Escape 2048</h3><p>Merge numbered blocks of equal value until one remains, under a move limit that turns every level into a plan.</p>
+        <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.revolave.blockescape" target="_blank" rel="noopener"><i class="fab fa-google-play"></i><span>Google Play</span></a>
+      </article>
+      <article class="mcard reveal" style="--c1:#E0A81E;--c2:#8A5A0A;--d:1">
+        <div class="mart"><img class="ms a" src="images/games/tap2048-shot01.webp" alt="" loading="lazy"><img class="ms b" src="images/games/tap2048-shot02.webp" alt="" loading="lazy">
+          <img class="mi" src="images/games/tap2048-icon.webp" alt="Tap 2048 Puzzle icon" loading="lazy"></div>
+        <span class="chip">Arcade</span><h3>Tap 2048 Puzzle</h3><p>The studio&#x27;s first merge puzzle: tap to merge cubes of the same value until only one cube is left.</p>
+        <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.revolave.tap2048" target="_blank" rel="noopener"><i class="fab fa-google-play"></i><span>Google Play</span></a>
+      </article>
+        </div>
+      </div>
+    </section>
 
-		<section id="home" class="home dark d-flex align-items-center">
+    <!-- ARCADE -->
+    <section class="section" id="arcade">
+      <div class="wrap">
+        <div class="eyebrow reveal">Arcade line · where it started</div>
+        <h2 class="reveal">Seven arcade and hyper-casual games that taught the fundamentals</h2>
+        <div class="agrid">
+      <a class="acard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.rainonem" target="_blank" rel="noopener" style="--c1:#2C8BE8;--c2:#0F4C91;--d:0">
+        <div class="acart"><img class="acs" src="images/games/rainonem-shot01.webp" alt="Rain On&#x27;Em screenshot" loading="lazy"><img class="aci" src="images/games/rainonem-icon.webp" alt="" loading="lazy"><span class="badge">1K+ installs</span></div>
+        <span class="chip">Arcade</span><h3>Rain On&#x27;Em</h3><p>Fly a UAV, draw your aim over the targets and let the missiles do the work.</p>
+      </a>
+      <a class="acard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.medievalhero" target="_blank" rel="noopener" style="--c1:#5E9E3A;--c2:#2E5A1C;--d:1">
+        <div class="acart"><img class="acs" src="images/games/medievalhero-shot01.webp" alt="Medieval Hero screenshot" loading="lazy"><img class="aci" src="images/games/medievalhero-icon.webp" alt="" loading="lazy"><span class="badge">1K+ installs</span></div>
+        <span class="chip">Arcade</span><h3>Medieval Hero</h3><p>Take up bow and arrows, defeat the attackers and save the town&#x27;s people.</p>
+      </a>
+      <a class="acard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.wegotnobrakes" target="_blank" rel="noopener" style="--c1:#E8306B;--c2:#8A1238;--d:2">
+        <div class="acart"><img class="acs" src="images/games/wegotnobrakes-shot01.webp" alt="We Got No Brakes screenshot" loading="lazy"><img class="aci" src="images/games/wegotnobrakes-icon.webp" alt="" loading="lazy"><span class="badge">500+ installs</span></div>
+        <span class="chip">Arcade</span><h3>We Got No Brakes</h3><p>Switch between your car&#x27;s three abilities to beat every obstacle on the road.</p>
+      </a>
+      <a class="acard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.cakesort" target="_blank" rel="noopener" style="--c1:#F2632B;--c2:#A3300F;--d:3">
+        <div class="acart"><img class="acs" src="images/games/cakesort-shot01.webp" alt="Cake Sort screenshot" loading="lazy"><img class="aci" src="images/games/cakesort-icon.webp" alt="" loading="lazy"></div>
+        <span class="chip">Arcade</span><h3>Cake Sort</h3><p>Rotate plates and move slices between them to serve full six-slice cakes.</p>
+      </a>
+      <a class="acard reveal" href="https://play.google.com/store/apps/details?id=com.revolave.rotator2048" target="_blank" rel="noopener" style="--c1:#2DB34A;--c2:#14662A;--d:0">
+        <div class="acart"><img class="acs" src="images/games/rotator2048-shot01.webp" alt="Rotator 2048 screenshot" loading="lazy"><img class="aci" src="images/games/rotator2048-icon.webp" alt="" loading="lazy"></div>
+        <span class="chip">Puzzle</span><h3>Rotator 2048</h3><p>Roll a numbered cube to the exit so the matching face lands on top.</p>
+      </a>
+      <a class="acard reveal" href="https://play.google.com/store/apps/details?id=com.flyingmeymun.clashtown" target="_blank" rel="noopener" style="--c1:#F2A11F;--c2:#8A5208;--d:1">
+        <div class="acart"><img class="acs" src="images/games/clashtown-shot01.webp" alt="Clash Town screenshot" loading="lazy"><img class="aci" src="images/games/clashtown-icon.webp" alt="" loading="lazy"></div>
+        <span class="chip">Arcade</span><h3>Clash Town</h3><p>Brawl through town, eliminate your rivals and be the sole survivor.</p>
+      </a>
+      <a class="acard reveal" href="https://play.google.com/store/apps/details?id=com.ticstudio.gaplessthrow" target="_blank" rel="noopener" style="--c1:#4A63D9;--c2:#24307A;--d:2">
+        <div class="acart"><img class="acs" src="images/games/gaplessthrow-shot01.webp" alt="Gapless Throw screenshot" loading="lazy"><img class="aci" src="images/games/gaplessthrow-icon.webp" alt="" loading="lazy"></div>
+        <span class="chip">Arcade</span><h3>Gapless Throw</h3><p>Test your reflexes: throw waves of balls into the matching baskets.</p>
+      </a>
+        </div>
+      </div>
+    </section>
 
-			<div class="intro">
-				
-				<div class="carousel">					
-					<div class="carousel-track"></div>
-				</div>
+    <!-- TRAJECTORY -->
+    <section class="section" id="trajectory">
+      <div class="wrap">
+        <div class="eyebrow reveal">Trajectory</div>
+        <h2 class="reveal">From one-mechanic puzzlers to systems-rich mid-core</h2>
+        <div class="timeline">
+          <div class="tl-line"><span></span></div>
+          <div class="tl-step reveal"><div class="n">1</div><div><h4>Arcade &amp; hyper-casual</h4><p class="games">Rain On&#39;Em · Medieval Hero · We Got No Brakes · Cake Sort · Rotator 2048 · Clash Town · Gapless Throw · Tap 2048 · Block Escape 2048 · Block Art</p><p>Single mechanic, fast iteration, ad-driven.</p></div></div>
+          <div class="tl-step reveal"><div class="n">2</div><div><h4>Casual &amp; idle sim</h4><p class="games">Medieval Business · Space Business · Mall Security</p><p>Economies, upgrade loops, collection.</p></div></div>
+          <div class="tl-step reveal"><div class="n">3</div><div><h4>Hybrid casual</h4><p class="games">Match Flow · Foto Fishing: Odyssey</p><p>Two-layer puzzles, original hooks, localisation.</p></div></div>
+          <div class="tl-step reveal hi"><div class="n">4</div><div><h4>Mid-core strategy</h4><p class="games">Caravan Business · Colony: Core Defence</p><p>Tactics, roguelike runs, factions, season passes.</p></div></div>
+        </div>
+      </div>
+    </section>
 
-				<!-- social icons -->
-				<ul class="social-icons list-inline mt-5">
+    <!-- CONTACT -->
+    <section class="section contact" id="contact">
+      <div class="wrap contact-grid">
+        <div>
+          <div class="eyebrow reveal">Let's talk</div>
+          <h2 class="reveal">Get in touch</h2>
+          <p class="reveal">Publishing, collaboration or just a hello. Send a message and I'll get back to you.</p>
+          <div class="contact-links reveal">
+            <a href="https://drive.google.com/file/d/103iZ5bI7-aw82KUjBOskTznQKN16pu8s/view?usp=drive_link" target="_blank" rel="noopener"><i class="fas fa-file-alt"></i> Check out my resume</a>
+            <a href="https://www.linkedin.com/in/tolgacebeci/" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="https://www.github.com/tolce/" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://play.google.com/store/apps/dev?id=7603877924688081724" target="_blank" rel="noopener"><i class="fab fa-google-play"></i> Revolave on Google Play</a>
+          </div>
+        </div>
+        <form id="contact-form" class="contact-form reveal" action="https://formspree.io/f/xoqbjdpz" method="POST">
+          <div class="row2">
+            <label><span>Name</span><input type="text" name="InputName" required placeholder="Your name"></label>
+            <label><span>Email</span><input type="email" name="InputEmail" required placeholder="Email address"></label>
+          </div>
+          <label><span>Subject</span><input type="text" name="InputSubject" required placeholder="Subject"></label>
+          <label><span>Message</span><textarea name="InputMessage" rows="6" required placeholder="Message"></textarea></label>
+          <button type="submit" class="btn primary">Send message</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
 
-					<li class="list-inline-item"><a href="https://play.google.com/store/apps/dev?id=7603877924688081724"
-							target="_blank"><i class="fab fa-google-play"></i></a></li>
+  <footer class="footer">
+    <span>© <span id="year">2026</span> Tolga Cebeci · Revolave</span>
+    <span><a href="privacy.html">Privacy</a> · <a href="icon-forge.html">Icon Forge</a></span>
+  </footer>
 
-					<li class="list-inline-item"><a href="https://www.linkedin.com/in/tolgacebeci/" target="_blank"><i
-								class="fab fa-linkedin"></i></a></li>
-
-					<li class="list-inline-item"><a href="https://www.github.com/tolce/" target="_blank"><i
-								class="fab fa-github-square"></i></a></li>
-
-				</ul>
-
-				<div class="container mt-5">
-					<div class="col-md-12 wow fadeInUp">
-
-						<a class="section-resume-text"
-							href="https://drive.google.com/file/d/103iZ5bI7-aw82KUjBOskTznQKN16pu8s/view?usp=drive_link"
-							target="_blank">Check out my resume!</a>
-
-					</div>
-				</div>
-
-			</div>
-
-		</section>
-
-		<!-- section contact -->
-		<section id="contact" class="contact">
-
-			<div class="container">
-
-				<!-- section title -->
-				<h2 class="section-contact-title wow fadeInUp" style="color:white">Get In Touch</h2>
-
-				<div class="col-md-12 wow fadeInUp">
-					<!-- Contact Form -->
-					<form id="contact-form" class="contact-form mt-5" action="https://formspree.io/f/xoqbjdpz"
-						method="POST">
-
-						<div class="messages"></div>
-
-						<div class="row">
-							<div class="column col-md-6">
-								<!-- Name input -->
-								<div class="form-group">
-									<input type="text" class="form-control" name="InputName" id="InputName"
-										placeholder="Your name" required="required" data-error="Name is required.">
-									<div class="help-block with-errors"></div>
-								</div>
-							</div>
-
-							<div class="column col-md-6">
-								<!-- Email input -->
-								<div class="form-group">
-									<input type="email" class="form-control" id="InputEmail" name="InputEmail"
-										placeholder="Email address" required="required" data-error="Email is required.">
-									<div class="help-block with-errors"></div>
-								</div>
-							</div>
-
-							<div class="column col-md-12">
-								<!-- Email input -->
-								<div class="form-group">
-									<input type="text" class="form-control" id="InputSubject" name="InputSubject"
-										placeholder="Subject" required="required" data-error="Subject is required.">
-									<div class="help-block with-errors"></div>
-								</div>
-							</div>
-
-							<div class="column col-md-12">
-								<!-- Message textarea -->
-								<div class="form-group">
-									<textarea name="InputMessage" id="InputMessage" class="form-control" rows="8"
-										placeholder="Message" required="required"
-										data-error="Message is required."></textarea>
-									<div class="help-block with-errors"></div>
-								</div>
-							</div>
-						</div>
-
-						<button type="submit" class="btn btn-default">Send Message</button><!-- Send Button -->
-
-					</form>
-
-				</div>
-
-				<div class="spacer" data-height="100"></div>
-
-			</div>
-
-		</section>
-
-		<footer class="footer dark fixed-bottom">
-
-			<span class="copyright">Tolga Cebeci</span>
-
-		</footer>
-
-	</main>
-
-	<script src="js/jquery-1.12.3.min.js"></script>
-	<script src="js/jquery.easing.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/validator.js"></script>
-	<script src="js/wow.min.js"></script>
-	<script src="js/custom.js"></script>
-	<script src="games.js"></script>
-	<script src="js/scripts.js"></script>
-
+  <script src="js/revolave.js"></script>
 </body>
-
 </html>
