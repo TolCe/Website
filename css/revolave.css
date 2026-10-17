@@ -253,3 +253,9 @@ p { color: var(--mute); font-size: 18px; }
   .hicon:nth-child(odd) { margin-top: 0; } .hicon:nth-child(even) { margin-top: 20px; }
 }
 @media (max-width: 480px) { .acard { padding: 10px 10px 16px; } .acard h3 { font-size: 17px; } .acard p { font-size: 13px; } }
+
+/* --- five stat tiles --- */
+.stats { grid-template-columns: repeat(5, 1fr); gap: 18px; }
+.stat { padding: 26px 24px; }
+.stat b { font-size: clamp(44px, 4.4vw, 76px); }
+@media (max-width: 1100px) { .stats { grid-template-columns: repeat(2, 1fr); } .stat:nth-child(2) { grid-column: span 2; order: 5; } }

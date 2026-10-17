@@ -75,12 +75,12 @@
   // reveal + counters
   function count(el) {
     var end = +el.getAttribute('data-count'), suf = el.getAttribute('data-suffix') || '';
-    if (reduce) { el.textContent = end + suf; return; }
+    if (reduce) { el.textContent = end.toLocaleString('en-US') + suf; return; }
     var t0 = null;
     (function step(ts) {
       if (!t0) t0 = ts;
       var k = Math.min(1, (ts - t0) / 1200), v = Math.round(end * (1 - Math.pow(1 - k, 3)));
-      el.textContent = v + suf;
+      el.textContent = v.toLocaleString('en-US') + suf;
       if (k < 1) requestAnimationFrame(step);
     })(performance.now());
   }
