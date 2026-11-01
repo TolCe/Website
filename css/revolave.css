@@ -68,7 +68,7 @@ p { color: var(--mute); font-size: 18px; }
 .socials { list-style: none; display: flex; gap: 12px; margin-top: 34px; }
 .socials a { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); color: var(--mute); font-size: 19px; transition: color .2s, border-color .2s, transform .2s; }
 .socials a:hover { color: var(--ink); border-color: var(--acc); transform: translateY(-2px); }
-.scroll-hint { position: absolute; left: 50%; bottom: 28px; width: 26px; height: 42px; border: 2px solid var(--dim); border-radius: 14px; translate: -50% 0; }
+.scroll-hint { position: absolute; left: 50%; bottom: calc(var(--foot-h) + 28px); width: 26px; height: 42px; border: 2px solid var(--dim); border-radius: 14px; translate: -50% 0; }
 .scroll-hint span { position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: var(--acc); animation: wheel 1.8s infinite; }
 @keyframes wheel { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(14px); } }
 
